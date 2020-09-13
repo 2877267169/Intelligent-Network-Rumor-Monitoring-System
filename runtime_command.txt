@@ -1,0 +1,1 @@
+pip install numpy==1.19.2 tensorflow==1.15 pyqt5==5.15.0 pyqt5-sip==12.8.1 pyqt5-stubs==5.14.2 pyqt5-tools
