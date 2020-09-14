@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="pages">
+    <file>resources/图标.png</file>
     <file>resources/corpus.png</file>
     <file>resources/data.png</file>
     <file>resources/hot.png</file>
