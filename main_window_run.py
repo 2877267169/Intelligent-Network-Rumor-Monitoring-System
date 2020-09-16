@@ -2,6 +2,12 @@ import os, sys
 import MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import ui_change
+import set_page_corpus_connect
+
+
+def set_all_connect(ui: MainWindow):
+    set_page_corpus_connect.set_page_corpus_connect(ui=ui)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -11,5 +17,7 @@ if __name__ == '__main__':
     ui_change.set_connect(ui=ui)
     ui.stackedWidget.setCurrentIndex(0)
 
+    set_all_connect(ui) # 设置全部的信号与槽的链接
+
     main_window.show()
-    exit(app.exec_())
+    sys.exit(app.exec_())
