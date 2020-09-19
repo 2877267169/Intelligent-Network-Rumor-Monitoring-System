@@ -6,6 +6,12 @@ import os, sys
 
 import MainWindow
 from data import transform_json_to_txt
+from data import bert_train_complex
+import running_state
+
+# matplotlib 和qt链接的包
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.pyplot as plt
 
 is_run_available = False
 
@@ -13,6 +19,7 @@ my_ui = MainWindow.Ui_MainWindow()
 
 
 def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
+    global FC
     global my_ui
     my_ui = ui
 
@@ -24,6 +31,7 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     # 命令按钮
     ui.my_page_corpus_commandLinkButton_verify.clicked.connect(verify_files)
     ui.my_page_corpus_commandLinkButton_go_for_work_space.clicked.connect(create_work_space)
+    ui.my_page_corpus_commandLinkButton_train.clicked.connect(create_TSV_file)
 
     # 文本框
     ui.my_page_corpus_lineEdit_from_json.textChanged.connect(set_run_unavailable)
@@ -33,6 +41,16 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     # 消息传递
     transform_json_to_txt.thread_transform_json_to_txt.my_send_message.connect(ptr_message)
     transform_json_to_txt.thread_transform_json_to_txt.my_send_process_bar_message.connect(set_process_bar)
+    bert_train_complex.thread_train_comp.my_send_message.connect(ptr_message)
+
+    # 画板的消息传递
+    transform_json_to_txt.thread_transform_json_to_txt.my_send_dict_for_graph.connect(re_graph)
+    # 画板初始化
+    f = plt.figure()
+    FC = FigureCanvas(f)
+    # 大画板!!!!!!!!!!!!!!!!!!!!!!
+    my_ui.my_page_corpus_gridLayout.layout().addWidget(FC)
+
 
 def get_user_input_and_set_to_json_lineEdit():
     global my_ui
@@ -82,7 +100,7 @@ def ptr_message(mystr: str, end='\n'):
     my_ui.my_page_corpus_textEdit.setText("%s%s%s" % (mystr, end, my_ui.my_page_corpus_textEdit.toPlainText()))
 
 
-def set_process_bar(proc:int):
+def set_process_bar(proc: int):
     my_ui.my_page_corpus_ProcessBar.setValue(proc)
 
 
@@ -97,7 +115,47 @@ def create_work_space():
     work_path = my_ui.my_page_corpus_lineEdit_workPath.text()
     json_path = my_ui.my_page_corpus_lineEdit_from_json.text()
 
-    transform_json_to_txt.thread_transform_json_to_txt.set_args(json_file_path=json_path, out_put_dir=work_path, moudle_name='')
+    transform_json_to_txt.thread_transform_json_to_txt.set_args(json_file_path=json_path, out_put_dir=work_path,
+                                                                moudle_name='')
     transform_json_to_txt.thread_transform_json_to_txt.start()
 
+# 画板刷新!!!
+def re_graph(d: dict):
+    print("尝试刷新")
+    global FC
+    plt.cla()
+    keys = list(d.keys())
+    plt.xticks(rotation=270)
+    cops = []
+    for key in keys:
+        cops.append([key, d[key]])
 
+    cops.sort(key=lambda x: x[0])
+
+    key_value = []
+    value = []
+    for line in cops:
+        key_value.append(line[0])
+        value.append(line[1])
+    plt.bar(key_value, value)
+    FC.draw()
+
+
+def create_TSV_file():
+    print('create tsv file')
+    global is_run_available
+    if is_run_available is False:
+        ptr_message("你的更改的内容没有进行校验，请先进行校验！")
+        return
+
+    if running_state.is_running is True:
+        ptr_message("你不应该在运行任务的时候进行其他任务")
+        return
+
+    base_dir = my_ui.my_page_corpus_lineEdit_workPath.text()
+
+    if os.path.isdir(os.path.join(base_dir, 'mark')) is False:
+        ptr_message('应该在标注之后才能生成训练文件！')
+        return
+    bert_train_complex.thread_train_comp.set_args(base_dir=base_dir)
+    bert_train_complex.thread_train_comp.start()

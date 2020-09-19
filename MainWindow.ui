@@ -570,14 +570,40 @@
                 </property>
                </widget>
               </item>
+              <item row="3" column="1">
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>100</width>
+                  <height>50</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
               <item row="4" column="1">
+               <widget class="QTextEdit" name="my_page_corpus_textEdit">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>5</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
                <widget class="Line" name="line">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
+              <item row="6" column="1">
                <widget class="QCommandLinkButton" name="my_page_corpus_commandLinkButton_verify">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -596,7 +622,7 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
+              <item row="7" column="1">
                <widget class="QCommandLinkButton" name="my_page_corpus_commandLinkButton_go_for_work_space">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -615,7 +641,7 @@
                 </property>
                </widget>
               </item>
-              <item row="7" column="1">
+              <item row="8" column="1">
                <widget class="QCommandLinkButton" name="my_page_corpus_commandLinkButton_train">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -633,19 +659,6 @@
                  <string>生成训练文件</string>
                 </property>
                </widget>
-              </item>
-              <item row="3" column="1">
-               <spacer name="verticalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>100</width>
-                  <height>200</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </widget>
@@ -686,11 +699,7 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QTextEdit" name="my_page_corpus_textEdit">
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
+               <layout class="QGridLayout" name="my_page_corpus_gridLayout"/>
               </item>
              </layout>
             </widget>
@@ -1759,6 +1768,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <resources>
   <include location="page_icon_rc.qrc"/>
+  <include location="../../../.designer/backup/page_icon_rc.qrc"/>
  </resources>
  <connections/>
 </ui>

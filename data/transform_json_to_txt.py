@@ -6,6 +6,7 @@
 """
 from PyQt5.QtCore import QThread, pyqtSignal
 import running_state
+
 """
 针对GUI界面进行了优化
 """
@@ -21,6 +22,25 @@ import set_page_corpus_connect
 def setUI(ui: MainWindow.Ui_MainWindow):
     global my_ui
     my_ui = ui
+
+
+# 全局统计用字典
+# 他应该再开始时候被重置。
+g_sum_dict = {}
+
+
+def make_statistics(my_date: str):
+    global g_sum_dict
+    if (my_date in g_sum_dict) is False:
+        g_sum_dict[my_date] = 1
+    else:
+        g_sum_dict[my_date] += 1
+
+
+def submit_dict():
+    global g_sum_dict
+    # submit
+    thread_transform_json_to_txt.send_dict_for_graph(g_sum_dict)
 
 
 #
@@ -53,10 +73,13 @@ def show_time(start_t, p):
 
 def form_time(time_str: str):
     l = time_str.split('-')
-    return "%04d-%02d-%02d" % (int(l[0]), int(l[1]), int(l[2]))
+    my_formatted_str = "%04d-%02d-%02d" % (int(l[0]), int(l[1]), int(l[2]))
+    make_statistics(my_formatted_str[-5:])
+    return my_formatted_str
 
 
 def main_run(json_file_path: str, out_put_dir: str, moudle_name: str):
+    global g_sum_dict
     # start 注意：这是修改后的内容#在此注释中间的内容谨慎修改！2020年7月27日16:37:55##################################################
     # out_put_dir = ""
     thread_transform_json_to_txt.my_sender(json_file_path)
@@ -140,7 +163,8 @@ def main_run(json_file_path: str, out_put_dir: str, moudle_name: str):
                 ))
                 reply_index += 1
         reply_index_txt.close()
-        if index % 7 == 0:
+        if index % 27 == 0:
+            submit_dict()
             thread_transform_json_to_txt.my_sender("\n已完成%.2f%%" % ((index / all_num) * 100))
             print("已完成%.2f%%" % ((index / all_num) * 100))
             thread_transform_json_to_txt.send_process(int((index / all_num) * 100))
@@ -157,6 +181,7 @@ def main_run(json_file_path: str, out_put_dir: str, moudle_name: str):
 class Thread_transform_json_to_txt(QThread):
     my_send_message = pyqtSignal(str, str)
     my_send_process_bar_message = pyqtSignal(int)
+    my_send_dict_for_graph = pyqtSignal(dict)
 
     # 务必不要忘记set!!!
     def set_args(self, json_file_path: str, out_put_dir: str, moudle_name: str):
@@ -164,18 +189,27 @@ class Thread_transform_json_to_txt(QThread):
         self.out_put_dir = out_put_dir
         self.moudle_name = moudle_name
 
-    def my_sender(self, message:str, end='\n'):
+    def my_sender(self, message: str, end='\n'):
         self.my_send_message.emit(message, end)
 
-    def send_process(self, proc:int):
+    def send_process(self, proc: int):
         self.my_send_process_bar_message.emit(proc)
 
+    def send_dict_for_graph(self, my_dict: dict):
+        self.my_send_dict_for_graph.emit(my_dict)
+
     def run(self):
+        global g_sum_dict
+        g_sum_dict = {}
         if running_state.is_running is False:
             running_state.is_running = True
-            running_state.running_message="生成工作空间"
+            running_state.running_message = "生成工作空间"
             main_run(json_file_path=self.json_file_path, out_put_dir=self.out_put_dir, moudle_name=self.moudle_name)
+            running_state.is_running = False
         else:
-            print("程序正在进行%s, 结束前不要进行其他操作！"%running_state.running_message)
-            self.my_send_message("程序正在进行%s, 结束前不要进行其他操作！"%running_state.running_message)
+            print("程序正在进行%s, 结束前不要进行其他操作！" % running_state.running_message)
+            self.my_send_message("程序正在进行%s, 结束前不要进行其他操作！" % running_state.running_message)
+            self.exit(0)
+
+
 thread_transform_json_to_txt = Thread_transform_json_to_txt()
