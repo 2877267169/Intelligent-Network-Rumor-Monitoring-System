@@ -14,8 +14,8 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 is_run_available = False
-
-my_ui = MainWindow.Ui_MainWindow()
+is_train_available = False
+# my_ui = MainWindow.Ui_MainWindow()
 
 
 def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
@@ -63,7 +63,8 @@ def get_user_input_and_set_to_workDir():
     global my_ui
     dir_path = QFileDialog.getExistingDirectory(my_ui.my_page_corpus_lineEdit_workPath, "Select work dir", '.')
     my_ui.my_page_corpus_lineEdit_workPath.setText(dir_path)
-
+    # 注意，这里第一个页面也对第二个页面产生了影响
+    my_ui.my_page_train_lineEdit_data_dir.setText(dir_path)
 
 def get_user_input_and_set_to_directionary_lineEdit():
     global my_ui
@@ -75,6 +76,7 @@ def get_user_input_and_set_to_directionary_lineEdit():
 def verify_files():
     global my_ui
     global is_run_available
+    global is_train_available
     json_file_path = my_ui.my_page_corpus_lineEdit_from_json.text()
     work_path = my_ui.my_page_corpus_lineEdit_workPath.text()
     dictionary = my_ui.my_page_corpus_lineEdit_directory.text()
@@ -83,8 +85,20 @@ def verify_files():
         # 校验成功
         ptr_message('校验成功')
         is_run_available = True
+        if os.path.isdir(os.path.join(work_path, 'mark')) is True:
+            ptr_message('成功检测到数据集 <可供训练>')
+            my_ui.my_page_corpus_button_for_state.setText('数据集 (可供训练的)')
+            my_ui.my_page_corpus_button_for_state.setStyleSheet("background-color: rgb(170, 170, 255);")
+            is_train_available = True
+        else:
+            ptr_message('成功检测到数据集 <仅分析>')
+            my_ui.my_page_corpus_button_for_state.setText('数据集 (仅分析)')
+            my_ui.my_page_corpus_button_for_state.setStyleSheet("background-color: rgb(85, 170, 255);")
+            is_train_available = False
     else:
         ptr_message('校验失败！请检查路径')
+        my_ui.my_page_corpus_button_for_state.setText('未选择数据集')
+        my_ui.my_page_corpus_button_for_state.setStyleSheet("")
         is_run_available = False
 
 
@@ -157,5 +171,7 @@ def create_TSV_file():
     if os.path.isdir(os.path.join(base_dir, 'mark')) is False:
         ptr_message('应该在标注之后才能生成训练文件！')
         return
-    bert_train_complex.thread_train_comp.set_args(base_dir=base_dir)
+    is_train = my_ui.my_page_corpus_button_for_state.text().find('训练') >= 0
+    bert_train_complex.thread_train_comp.set_args(base_dir=base_dir, is_train=is_train)
+
     bert_train_complex.thread_train_comp.start()

@@ -28,6 +28,7 @@ def setUI(ui: MainWindow.Ui_MainWindow):
 # 他应该再开始时候被重置。
 g_sum_dict = {}
 
+show_times = 17 # 进度条展示频率
 
 def make_statistics(my_date: str):
     global g_sum_dict
@@ -79,6 +80,7 @@ def form_time(time_str: str):
 
 
 def main_run(json_file_path: str, out_put_dir: str, moudle_name: str):
+    global show_times
     global g_sum_dict
     # start 注意：这是修改后的内容#在此注释中间的内容谨慎修改！2020年7月27日16:37:55##################################################
     # out_put_dir = ""
@@ -163,7 +165,8 @@ def main_run(json_file_path: str, out_put_dir: str, moudle_name: str):
                 ))
                 reply_index += 1
         reply_index_txt.close()
-        if index % 27 == 0:
+        show_times = all_num//17
+        if index % show_times == 0:
             submit_dict()
             thread_transform_json_to_txt.my_sender("\n已完成%.2f%%" % ((index / all_num) * 100))
             print("已完成%.2f%%" % ((index / all_num) * 100))

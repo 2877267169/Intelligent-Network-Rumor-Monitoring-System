@@ -3,10 +3,15 @@ import MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import ui_change
 import set_page_corpus_connect
+import set_page_train_connect
+import matplotlib
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.pyplot as plt
 
 
 def set_all_connect(ui: MainWindow):
     set_page_corpus_connect.set_page_corpus_connect(ui=ui)
+    set_page_train_connect.set_page_train_connect(ui=ui)
 
 
 if __name__ == '__main__':
