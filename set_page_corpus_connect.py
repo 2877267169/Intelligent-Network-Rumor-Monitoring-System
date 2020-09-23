@@ -19,8 +19,9 @@ is_train_available = False
 
 
 def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
-    global FC
+    global ax_bar
     global my_ui
+    global FC_corpus # 画图组件
     my_ui = ui
 
     # 按钮
@@ -47,9 +48,11 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     transform_json_to_txt.thread_transform_json_to_txt.my_send_dict_for_graph.connect(re_graph)
     # 画板初始化
     f = plt.figure()
-    FC = FigureCanvas(f)
+    FC_corpus = FigureCanvas(f)
+
+    ax_bar = f.add_subplot('111')
     # 大画板!!!!!!!!!!!!!!!!!!!!!!
-    my_ui.my_page_corpus_gridLayout.layout().addWidget(FC)
+    my_ui.my_page_corpus_gridLayout.layout().addWidget(FC_corpus)
 
 
 def get_user_input_and_set_to_json_lineEdit():
@@ -136,10 +139,14 @@ def create_work_space():
 # 画板刷新!!!
 def re_graph(d: dict):
     print("尝试刷新")
-    global FC
-    plt.cla()
+    global ax_bar
+    global FC_corpus
+    ax_bar.cla()
     keys = list(d.keys())
-    plt.xticks(rotation=270)
+    ax_bar.set_title("Frequency of Information")
+    #ax_bar.set_xticks(rotation=270)
+    for tick in ax_bar.get_xticklabels():
+        tick.set_rotation(300)
     cops = []
     for key in keys:
         cops.append([key, d[key]])
@@ -151,8 +158,8 @@ def re_graph(d: dict):
     for line in cops:
         key_value.append(line[0])
         value.append(line[1])
-    plt.bar(key_value, value)
-    FC.draw()
+    ax_bar.bar(key_value, value)
+    FC_corpus.draw()
 
 
 def create_TSV_file():
@@ -168,9 +175,9 @@ def create_TSV_file():
 
     base_dir = my_ui.my_page_corpus_lineEdit_workPath.text()
 
-    if os.path.isdir(os.path.join(base_dir, 'mark')) is False:
-        ptr_message('应该在标注之后才能生成训练文件！')
-        return
+    # if os.path.isdir(os.path.join(base_dir, 'mark')) is False:
+    #     ptr_message('应该在标注之后才能生成训练文件！')
+    #     return
     is_train = my_ui.my_page_corpus_button_for_state.text().find('训练') >= 0
     bert_train_complex.thread_train_comp.set_args(base_dir=base_dir, is_train=is_train)
 

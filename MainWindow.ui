@@ -1750,7 +1750,7 @@ p, li { white-space: pre-wrap; }
              </property>
              <layout class="QGridLayout" name="gridLayout_9">
               <item row="0" column="0">
-               <layout class="QGridLayout" name="gridLayout_8"/>
+               <layout class="QGridLayout" name="my_page_train_gridLayout_graph"/>
               </item>
              </layout>
             </widget>
