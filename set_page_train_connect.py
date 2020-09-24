@@ -80,9 +80,10 @@ def set_page_train_connect(ui: MainWindow.Ui_MainWindow):
     FC_train = FigureCanvas(train_f)
     # 将大画板插入组件！！！
     my_ui.my_page_train_gridLayout_graph.layout().addWidget(FC_train)
+    my_ui.my_page_warning_groupBox_for_graph.layout().addWidget(FigureCanvas(train_f))
 
     # pie_ax就是我要画饼的组件了！！
-    pie_ax = train_f.add_subplot('111')
+    pie_ax = train_f.add_subplot(1,1,1)
 
     pie_ax.cla()
     pie_ax.set_title('The Predict Result of BERT Training')
@@ -393,4 +394,9 @@ def draw_pie(num_list:list, my_label:list):
     pie_ax.set_title('The Predict Result of BERT Training')
     print('清除')
     pie_ax.pie(num_list, labels=my_label)
+    FC_train.draw()
+
+def re_draw():
+    global my_ui
+    global FC_train # 画图组件
     FC_train.draw()

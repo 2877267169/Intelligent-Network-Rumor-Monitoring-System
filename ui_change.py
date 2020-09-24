@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import MainWindow
+import set_page_train_connect
+import set_page_corpus_connect
 
 
 def set_connect(ui: MainWindow.Ui_MainWindow):
@@ -19,11 +21,13 @@ def change_to_corpus(salf):
     print(0)
 
     my_ui.stackedWidget.setCurrentIndex(0)
+    set_page_corpus_connect.re_draw()
 
 
 def change_to_train(salf):
     print(1)
     my_ui.stackedWidget.setCurrentIndex(1)
+    set_page_train_connect.re_draw()
 
 
 def change_to_data(salf):
@@ -39,3 +43,4 @@ def change_to_warning(salf):
 def change_to_hot(salf):
     print(4)
     my_ui.stackedWidget.setCurrentIndex(4)
+

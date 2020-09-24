@@ -52,9 +52,10 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
 
     FC_corpus = FigureCanvas(f)
 
-    ax_bar = f.add_subplot('111')
+    ax_bar = f.add_subplot(1,1,1)
     # 大画板!!!!!!!!!!!!!!!!!!!!!!
     my_ui.my_page_corpus_gridLayout.layout().addWidget(FC_corpus)
+    my_ui.my_page_data_groupBox_for_graph.layout().addWidget(FigureCanvas(f))
 
 
 def get_user_input_and_set_to_json_lineEdit():
@@ -184,3 +185,9 @@ def create_TSV_file():
     bert_train_complex.thread_train_comp.set_args(base_dir=base_dir, is_train=is_train)
 
     bert_train_complex.thread_train_comp.start()
+
+
+def re_draw():
+    global my_ui
+    global FC_corpus # 画图组件
+    FC_corpus.draw()

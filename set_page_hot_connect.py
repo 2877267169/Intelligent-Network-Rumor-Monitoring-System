@@ -23,8 +23,8 @@ def set_page_connect(ui: MainWindow.Ui_MainWindow):
     FC_hot = FigureCanvas(f)
 
     # 小图
-    ax_wc_l = f.add_subplot('121')
-    ax_wc_r = f.add_subplot('122')
+    ax_wc_l = f.add_subplot(1,2,1)
+    ax_wc_r = f.add_subplot(1,2,2)
     # 大画板!!!!!!!!!!!!!!!!!!!!!!
     my_ui.my_page_hot_gridLayout_for_graph.layout().addWidget(FC_hot)
     word_clouad_create.word_cloude_create.send_cloude_dict.connect(set_cloud)
