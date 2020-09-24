@@ -47,7 +47,9 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     # 画板的消息传递
     transform_json_to_txt.thread_transform_json_to_txt.my_send_dict_for_graph.connect(re_graph)
     # 画板初始化
+
     f = plt.figure()
+
     FC_corpus = FigureCanvas(f)
 
     ax_bar = f.add_subplot('111')
