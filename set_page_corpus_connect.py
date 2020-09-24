@@ -8,6 +8,7 @@ import MainWindow
 from data import transform_json_to_txt
 from data import bert_train_complex
 import running_state
+import json
 
 # matplotlib 和qt链接的包
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -15,13 +16,42 @@ import matplotlib.pyplot as plt
 
 is_run_available = False
 is_train_available = False
+
+
 # my_ui = MainWindow.Ui_MainWindow()
+class PathPara():
+    def __init__(self):
+        self.json_file = 'json_file'
+        self.work_path = 'work_path'
+        self.dict = 'dict'
+
+
+path_para = PathPara()
+
+
+# 获得全部参数
+def get_all_path():
+    global my_ui
+    res = {
+        path_para.json_file: my_ui.my_page_corpus_lineEdit_from_json.text(),
+        path_para.work_path: my_ui.my_page_corpus_lineEdit_workPath.text(),
+        path_para.dict: my_ui.my_page_corpus_lineEdit_directory.text()
+    }
+    return res
+
+
+# 用字典设置全部参数
+def set_all_path(para: dict):
+    global my_ui
+    my_ui.my_page_corpus_lineEdit_from_json.setText(para[path_para.json_file])
+    my_ui.my_page_corpus_lineEdit_workPath.setText(para[path_para.work_path])
+    my_ui.my_page_corpus_lineEdit_directory.setText(para[path_para.dict])
 
 
 def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     global ax_bar
     global my_ui
-    global FC_corpus # 画图组件
+    global FC_corpus  # 画图组件
     my_ui = ui
 
     # 按钮
@@ -52,10 +82,16 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
 
     FC_corpus = FigureCanvas(f)
 
-    ax_bar = f.add_subplot(1,1,1)
+    ax_bar = f.add_subplot(1, 1, 1)
     # 大画板!!!!!!!!!!!!!!!!!!!!!!
     my_ui.my_page_corpus_gridLayout.layout().addWidget(FC_corpus)
     my_ui.my_page_data_groupBox_for_graph.layout().addWidget(FigureCanvas(f))
+
+    if os.path.isfile("corpus.json") is True:
+        print("加载保存的路径...")
+        with open("corpus.json", 'r+', encoding='utf-8') as f:
+            paras = json.load(f)
+        set_all_path(para=paras)
 
 
 def get_user_input_and_set_to_json_lineEdit():
@@ -71,6 +107,7 @@ def get_user_input_and_set_to_workDir():
     my_ui.my_page_corpus_lineEdit_workPath.setText(dir_path)
     # 注意，这里第一个页面也对第二个页面产生了影响
     my_ui.my_page_train_lineEdit_data_dir.setText(dir_path)
+
 
 def get_user_input_and_set_to_directionary_lineEdit():
     global my_ui
@@ -90,6 +127,11 @@ def verify_files():
     if os.path.isfile(json_file_path) and os.path.isdir(work_path) and (dictionary == '' or os.path.isfile(dictionary)):
         # 校验成功
         ptr_message('校验成功')
+        # 保存数据
+        paras = get_all_path()
+        with open("corpus.json", 'w+', encoding='utf-8') as f:
+            json.dump(paras, f, ensure_ascii=False, indent=4)
+
         is_run_available = True
         if os.path.isdir(os.path.join(work_path, 'mark')) is True:
             ptr_message('成功检测到数据集 <可供训练>')
@@ -139,6 +181,7 @@ def create_work_space():
                                                                 moudle_name='')
     transform_json_to_txt.thread_transform_json_to_txt.start()
 
+
 # 画板刷新!!!
 def re_graph(d: dict):
     print("尝试刷新")
@@ -147,7 +190,7 @@ def re_graph(d: dict):
     ax_bar.cla()
     keys = list(d.keys())
     ax_bar.set_title("Frequency of Information")
-    #ax_bar.set_xticks(rotation=270)
+    # ax_bar.set_xticks(rotation=270)
     for tick in ax_bar.get_xticklabels():
         tick.set_rotation(300)
     cops = []
@@ -189,5 +232,5 @@ def create_TSV_file():
 
 def re_draw():
     global my_ui
-    global FC_corpus # 画图组件
+    global FC_corpus  # 画图组件
     FC_corpus.draw()
