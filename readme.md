@@ -1,5 +1,11 @@
 # 智能网络谣言监测系统_简单的说明文件
 本项目暂还不支持脱离python环境独立运行，所以需要安装环境。
+
+已经在以下操作系统中测试并部署成功：
+
+* windows 10
+
+* windows 7
 ## 1. 配置环境
 环境具体所需的依赖包的名字在`runtime_command.txt`内。执行其内的语句即可安装所有依赖包。
 
@@ -8,6 +14,9 @@ _runtime_command.txt 的内容_（**示例，请关注实时更新的具体文�
 `pip install numpy==1.19.2 matplotlib tensorflow==1.15 pyqt5==5.15.0 pyqt5-sip==12.8.1 pyqt5-stubs==5.14.2 pyqt5-tools lac wordcloude`
 
 _**本系统使用python3， linux系统需要使用pip3**_
+
+
+**【提示】 tensorflow的包体积较大，为节省时间推荐通过本地包的方式进行下载！支持的tensorflow版本为 1.15。**
 
 ## 2. 运行
 本系统的启动文件为**main_window_run.py**，在安装环境完毕后，你需要执行
