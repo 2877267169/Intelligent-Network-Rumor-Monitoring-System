@@ -1,1 +1,1 @@
-pip install numpy==1.19.2 matplotlib tensorflow==1.15 pyqt5==5.15.0 pyqt5-sip==12.8.1 pyqt5-stubs==5.14.2 pyqt5-tools lac wordcloud -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install numpy==1.19.2 matplotlib tensorflow==1.15 pyqt5==5.15.0 pyqt5-sip==12.8.1 pyqt5-stubs==5.14.2 lac wordcloud -i https://pypi.tuna.tsinghua.edu.cn/simple
