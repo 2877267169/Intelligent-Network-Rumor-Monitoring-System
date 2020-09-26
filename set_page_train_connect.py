@@ -333,11 +333,11 @@ def run_for_bert():
 
         run_classifier.setFlag(
             task_name='my_test',
-            data_dir=file_parameters['data_dir'],
-            bert_config_file=file_parameters['bert_config_file'],
-            vocab_file=file_parameters['vocab_file'],
-            output_dir=file_parameters['output_dir'],
-            init_checkpoint=file_parameters['init_checkpoint'],
+            data_dir=my_file_parameters['data_dir'],
+            bert_config_file=my_file_parameters['bert_config_file'],
+            vocab_file=my_file_parameters['vocab_file'],
+            output_dir=my_file_parameters['output_dir'],
+            init_checkpoint=my_file_parameters['init_checkpoint'],
 
             do_lower_case=my_training_parameters[train_parameters.do_lower_case],
             max_seq_length=int(my_training_parameters[train_parameters.max_seq_length]),
