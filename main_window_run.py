@@ -1,3 +1,6 @@
+"""
+开通测试分支1
+"""
 import os, sys
 import MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
