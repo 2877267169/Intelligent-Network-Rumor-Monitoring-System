@@ -80,7 +80,8 @@ def set_page_train_connect(ui: MainWindow.Ui_MainWindow):
     FC_train = FigureCanvas(train_f)
     # 将大画板插入组件！！！
     my_ui.my_page_train_gridLayout_graph.layout().addWidget(FC_train)
-    my_ui.my_page_warning_groupBox_for_graph.layout().addWidget(FigureCanvas(train_f))
+    # 测试时使用，故删去
+    # my_ui.my_page_warning_groupBox_for_graph.layout().addWidget(FigureCanvas(train_f))
 
     # pie_ax就是我要画饼的组件了！！
     pie_ax = train_f.add_subplot(1,1,1)

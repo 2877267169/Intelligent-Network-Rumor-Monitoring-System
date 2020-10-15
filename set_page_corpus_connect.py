@@ -85,7 +85,8 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     ax_bar = f.add_subplot(1, 1, 1)
     # 大画板!!!!!!!!!!!!!!!!!!!!!!
     my_ui.my_page_corpus_gridLayout.layout().addWidget(FC_corpus)
-    my_ui.my_page_data_groupBox_for_graph.layout().addWidget(FigureCanvas(f))
+    # 测试时使用，故删除
+    # my_ui.my_page_data_groupBox_for_graph.layout().addWidget(FigureCanvas(f))
 
     if os.path.isfile("corpus.json") is True:
         print("加载保存的路径...")
