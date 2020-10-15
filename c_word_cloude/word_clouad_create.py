@@ -49,7 +49,6 @@ class WordCloudeCreate(QThread):
             print("Error, no index.txt")
             return
         data = data_ops.Data_ops(self.path)
-
         cnt_0 = 0
         all_0 = len(data.get_all_path())
         for file_path in data.get_all_path():
