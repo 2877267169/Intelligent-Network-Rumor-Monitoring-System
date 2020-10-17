@@ -185,6 +185,12 @@ def create_work_space():
 
 # 画板刷新!!!
 def re_graph(d: dict):
+    """
+    画板刷新
+
+    :param d: 所需的数据字典
+    :return: 无
+    """
     print("尝试刷新")
     global ax_bar
     global FC_corpus
@@ -232,6 +238,11 @@ def create_TSV_file():
 
 
 def re_draw():
+    """
+    将语料设置内的画图画板重绘
+
+    :return: 无
+    """
     global my_ui
     global FC_corpus  # 画图组件
     FC_corpus.draw()
