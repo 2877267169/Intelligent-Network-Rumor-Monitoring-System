@@ -1760,7 +1760,7 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="my_page_data_analize">
+      <widget class="QWidget" name="my_page_data_analyse">
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox_3">
@@ -1809,7 +1809,7 @@ p, li { white-space: pre-wrap; }
                  </attribute>
                  <layout class="QGridLayout" name="gridLayout_12">
                   <item row="0" column="0">
-                   <layout class="QGridLayout" name="my_page_data_analise_attitude_tend_graph"/>
+                   <layout class="QGridLayout" name="my_page_data_analyse_attitude_tend_graph"/>
                   </item>
                  </layout>
                 </widget>
@@ -1819,7 +1819,7 @@ p, li { white-space: pre-wrap; }
                  </attribute>
                  <layout class="QGridLayout" name="gridLayout_18">
                   <item row="0" column="0">
-                   <layout class="QGridLayout" name="my_page_data_analize_intensity_tend_graph"/>
+                   <layout class="QGridLayout" name="my_page_data_analyse_intensity_tend_graph"/>
                   </item>
                  </layout>
                 </widget>
@@ -1874,7 +1874,7 @@ p, li { white-space: pre-wrap; }
                      <number>1</number>
                     </property>
                     <item row="0" column="0">
-                     <layout class="QGridLayout" name="my_page_data_analise_attitude_pie_graph">
+                     <layout class="QGridLayout" name="my_page_data_analyse_attitude_pie_graph">
                       <property name="leftMargin">
                        <number>0</number>
                       </property>
@@ -1911,7 +1911,7 @@ p, li { white-space: pre-wrap; }
                      <number>1</number>
                     </property>
                     <item row="0" column="0">
-                     <layout class="QGridLayout" name="my_page_data_analise_intensity_pie_graph"/>
+                     <layout class="QGridLayout" name="my_page_data_analyse_intensity_pie_graph"/>
                     </item>
                    </layout>
                   </widget>

@@ -16,8 +16,22 @@ test_obj = {
         15
     ]
 }
-test_obj2 = test_obj.copy()
-test_obj2['data'] = (test_obj2['data']).reverse()
+test_obj2 = {
+    "date": [
+        "06-01",
+        "06-02",
+        "06-03",
+        "06-04",
+        "06-05"
+    ],
+    "data": [
+        15,
+        10,
+        20,
+        2,
+        10
+    ]
+}
 
 
 def get_P():
@@ -25,7 +39,7 @@ def get_P():
 
 
 def get_N():
-    return test_obj
+    return test_obj2
 
 
 def get_I():
@@ -36,7 +50,7 @@ def get_none():
     return test_obj
 
 
-def ana_start():
+def ana_start(path:str):
     pass
 
 

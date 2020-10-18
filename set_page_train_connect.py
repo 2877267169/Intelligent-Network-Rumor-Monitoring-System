@@ -84,14 +84,14 @@ def set_page_train_connect(ui: MainWindow.Ui_MainWindow):
     # my_ui.my_page_warning_groupBox_for_graph.layout().addWidget(FigureCanvas(train_f))
 
     # pie_ax就是我要画饼的组件了！！
-    pie_ax = train_f.add_subplot(1,1,1)
+    pie_ax = train_f.add_subplot(1, 1, 1)
 
     pie_ax.cla()
     pie_ax.set_title('The Predict Result of BERT Training')
 
     draw_pie([100], ['waiting for analyze'])
 
-    #draw_pie()
+    # draw_pie()
 
     # 读取上一次的配置
     if os.path.isfile('file_para.json') is True:
@@ -300,12 +300,13 @@ def run_for_bert():
         return
     else:
         if os.path.isfile(os.path.join(my_file_parameters[file_parameters.output_dir], 'test_results.tsv')) is True:
-            res = QMessageBox.question(my_ui.my_page_train, "已有训练结果", "检测到你已经有了一个训练结果！是否现在分析？\n选择‘是’将会跳过训练，选择‘否’将仍然开始训练。",
-                                 QMessageBox.Yes|QMessageBox.No, QMessageBox.Yes)
+            res = QMessageBox.question(my_ui.my_page_train, "已有训练结果",
+                                       "检测到你已经有了一个训练结果！是否现在分析？\n选择‘是’将会跳过训练，选择‘否’将仍然开始训练。",
+                                       QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
             if res == QMessageBox.No:
-                pass# 继续训练！
+                pass  # 继续训练！
             else:
-                #选择是！！！！！
+                # 选择是！！！！！
                 read_and_set_pie()
                 return
 
@@ -368,12 +369,12 @@ def read_and_set_pie():
         print('找不到文件')
         return
 
-
     # my_res=[a, b]
     cnt_80 = 0
     cnt_mid = 0
     cnt_20 = 0
-    with open(os.path.join(my_file_parameters[file_parameters.output_dir], 'test_results.tsv'), 'r+', encoding='utf-8') as f:
+    with open(os.path.join(my_file_parameters[file_parameters.output_dir], 'test_results.tsv'), 'r+',
+              encoding='utf-8') as f:
         lines = f.readlines()
 
     for line in lines:
@@ -388,7 +389,7 @@ def read_and_set_pie():
     draw_pie([cnt_20, cnt_mid, cnt_80], ['The Warning Message', 'Uncertainty Message', 'Safe Message'])
 
 
-def draw_pie(num_list:list, my_label:list):
+def draw_pie(num_list: list, my_label: list):
     global pie_ax
     global FC_train
     pie_ax.cla()
@@ -397,7 +398,8 @@ def draw_pie(num_list:list, my_label:list):
     pie_ax.pie(num_list, labels=my_label)
     FC_train.draw()
 
+
 def re_draw():
     global my_ui
-    global FC_train # 画图组件
+    global FC_train  # 画图组件
     FC_train.draw()
