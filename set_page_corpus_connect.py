@@ -16,7 +16,8 @@ import matplotlib.pyplot as plt
 
 is_run_available = False
 is_train_available = False
-
+is_path_available = False # 路径可用性
+available_path = ""
 
 # my_ui = MainWindow.Ui_MainWindow()
 class PathPara():
@@ -121,6 +122,7 @@ def verify_files():
     global my_ui
     global is_run_available
     global is_train_available
+    global available_path
     json_file_path = my_ui.my_page_corpus_lineEdit_from_json.text()
     work_path = my_ui.my_page_corpus_lineEdit_workPath.text()
     dictionary = my_ui.my_page_corpus_lineEdit_directory.text()
@@ -130,6 +132,7 @@ def verify_files():
         ptr_message('校验成功')
         # 保存数据
         paras = get_all_path()
+        available_path = paras[path_para.work_path]
         with open("corpus.json", 'w+', encoding='utf-8') as f:
             json.dump(paras, f, ensure_ascii=False, indent=4)
 

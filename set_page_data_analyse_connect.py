@@ -13,6 +13,8 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 # 画图对象
+import set_page_corpus_connect
+
 my_page_data_analyse_attitude_tend_graph_fig = plt.figure()
 my_page_data_analyse_attitude_pie_graph_fig = plt.figure()
 my_page_data_analyse_intensity_tend_graph_fig = plt.figure()
@@ -34,7 +36,10 @@ my_ui = MainWindow.Ui_MainWindow()
 def set_page_data_analyse_connect(ui: MainWindow.Ui_MainWindow):
     global my_ui
     my_ui = ui
-    ui.my_page_data_analize_commandLinkButton_start.clicked.connect(start_analyse)
+
+    # 信号与槽的链接
+    ui.my_page_data_analyse_commandLinkButton_start.clicked.connect(start_analyse)
+    analysis_processer.analise_message.send_analyse_process_bar.connect(set_ana_process_bar)
 
     # 加入组件的操作
     ui.my_page_data_analyse_attitude_tend_graph.layout().addWidget(my_page_data_analyse_attitude_tend_graph_FC)
@@ -42,7 +47,13 @@ def set_page_data_analyse_connect(ui: MainWindow.Ui_MainWindow):
     ui.my_page_data_analyse_intensity_tend_graph.addWidget(my_page_data_analyse_intensity_tend_graph_FC)
     ui.my_page_data_analyse_intensity_pie_graph.addWidget(my_page_data_analyse_intensity_pie_graph_FC)
 
+    # 将进度条重置为0
+    set_ana_process_bar(0)
     init_draw_Objects()
+
+
+def set_ana_process_bar(value: int):
+    my_ui.my_page_data_analyse_progressBar.setValue(value)
 
 
 # 态度图
@@ -183,4 +194,10 @@ def init_draw_Objects():
 
 
 def start_analyse():
-    print("正在进行数据分析")
+    print("即将进行数据分析")
+    if set_page_corpus_connect.is_run_available is False:
+        print("你貌似没有通过校验！")
+        return
+    analysis_processer.analise_message.set_path(set_page_corpus_connect.available_path)
+    # 启动
+    analysis_processer.analise_message.start()

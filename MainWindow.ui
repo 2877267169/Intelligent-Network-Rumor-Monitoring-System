@@ -1935,14 +1935,14 @@ p, li { white-space: pre-wrap; }
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="QCommandLinkButton" name="my_page_data_analize_commandLinkButton_start">
+               <widget class="QCommandLinkButton" name="my_page_data_analyse_commandLinkButton_start">
                 <property name="text">
                  <string>开始分析</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QProgressBar" name="progressBar">
+               <widget class="QProgressBar" name="my_page_data_analyse_progressBar">
                 <property name="value">
                  <number>24</number>
                 </property>

@@ -50,12 +50,33 @@ def get_none():
     return test_obj
 
 
-def ana_start(path:str):
-    pass
+my_ana_path = ""
 
 
 class AnaliseMessage(QThread):
-    send_analise_process_bar = pyqtSignal(int)
+    send_analyse_process_bar = pyqtSignal(int)
+
+    def f_send_my_analyse_process_bar(self, value: int):
+        self.send_analyse_process_bar.emit(value)
+
+    def set_path(self, path: str):
+        global my_ana_path
+        my_ana_path = path
+
+    def run(self):
+        global my_ana_path
+        if my_ana_path == "":
+            print("错误：未传入路径")
+            return
+        ana_start(my_ana_path)
 
 
 analise_message = AnaliseMessage()
+
+
+def ana_start(path=""):
+    if path == "":
+        print("error, 未传入路径")
+        return
+    print("分析进程已经开始")
+    analise_message.f_send_my_analyse_process_bar(66)
