@@ -101,6 +101,63 @@ def draw_analyse_attitude_pie(
     my_page_data_analyse_attitude_pie_graph_FC.draw()
 
 
+# ###################激烈程度部分############################# #
+# 激烈程度图
+def draw_analyse_intensity_tend(
+        i_x: list,
+        i_y: list,
+        none_x: list,
+        none_y: list
+):
+    """
+    激烈程度图\n
+    将数据绘制到板子上
+
+    :param i_x: 言辞激烈的x(日期)
+    :param i_y: 言辞激烈的y(数据)
+    :param none_x: 态度平平的x(日期)
+    :param none_y: 态度平平的y(数据)
+    :return: None
+    """
+    my_page_data_analyse_intensity_tend_graph_ax.cla()
+    my_page_data_analyse_intensity_tend_graph_ax.set_title("Tend of Intensity")
+    for tick in my_page_data_analyse_intensity_tend_graph_ax.get_xticklabels():
+        tick.set_rotation(300)
+    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x, i_y)
+    my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y)
+    my_page_data_analyse_intensity_tend_graph_FC.draw()
+
+
+def draw_analyse_intensity_pie(
+        i_x: int,
+        none_x: int,
+        i_x_str="Intense",
+        none_x_str="Tiny Attitude",
+):
+    """
+    绘制【激烈程度】饼图
+
+    :param i_x:
+    :param none_x:
+    :param i_x_str:
+    :param none_x_str:
+    :return:
+    """
+    my_page_data_analyse_intensity_pie_graph_ax.cla()
+    my_page_data_analyse_intensity_pie_graph_ax.set_title("The Pie of Intensity")
+    print("正在画激烈程度饼图")
+    my_page_data_analyse_intensity_pie_graph_ax.pie(
+        [
+            i_x,
+            none_x
+        ], labels=[
+            i_x_str,
+            none_x_str
+        ]
+    )
+    my_page_data_analyse_intensity_pie_graph_FC.draw()
+
+
 def init_draw_Objects():
     print("测试画图")
     draw_analyse_attitude_tend(
@@ -110,7 +167,16 @@ def init_draw_Objects():
         n_x=analysis_processer.get_N()['date']
     )
     draw_analyse_attitude_pie(
-        60,40
+        60, 40
+    )
+    draw_analyse_intensity_tend(
+        i_y=analysis_processer.get_P()['data'],
+        i_x=analysis_processer.get_P()['date'],
+        none_y=analysis_processer.get_N()['data'],
+        none_x=analysis_processer.get_N()['date']
+    )
+    draw_analyse_intensity_pie(
+        60, 40
     )
 
     print("我被执行了！")
