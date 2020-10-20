@@ -54,10 +54,15 @@ my_ana_path = ""
 
 
 class AnaliseMessage(QThread):
-    send_analyse_process_bar = pyqtSignal(int)
+    s_send_analyse_process_bar = pyqtSignal(int)
+    s_send_analyse_process_text = pyqtSignal(str)
+    s_send_analyse_start_draw = pyqtSignal()
 
     def f_send_my_analyse_process_bar(self, value: int):
-        self.send_analyse_process_bar.emit(value)
+        self.s_send_analyse_process_bar.emit(value)
+
+    def f_send_text_message(self, my_text: str):
+        self.s_send_analyse_process_text.emit(my_text)
 
     def set_path(self, path: str):
         global my_ana_path
@@ -79,4 +84,7 @@ def ana_start(path=""):
         print("error, 未传入路径")
         return
     print("分析进程已经开始")
+    analise_message.f_send_text_message("正在准备开始")
+    print("分析结束！")
+    analise_message.s_send_analyse_start_draw.emit()
     analise_message.f_send_my_analyse_process_bar(66)

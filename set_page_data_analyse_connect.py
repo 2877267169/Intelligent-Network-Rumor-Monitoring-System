@@ -39,7 +39,9 @@ def set_page_data_analyse_connect(ui: MainWindow.Ui_MainWindow):
 
     # 信号与槽的链接
     ui.my_page_data_analyse_commandLinkButton_start.clicked.connect(start_analyse)
-    analysis_processer.analise_message.send_analyse_process_bar.connect(set_ana_process_bar)
+    analysis_processer.analise_message.s_send_analyse_process_bar.connect(set_ana_process_bar)
+    analysis_processer.analise_message.s_send_analyse_process_text.connect(set_process_text)
+    analysis_processer.analise_message.s_send_analyse_start_draw.connect(ana_start_draw)
 
     # 加入组件的操作
     ui.my_page_data_analyse_attitude_tend_graph.layout().addWidget(my_page_data_analyse_attitude_tend_graph_FC)
@@ -170,7 +172,7 @@ def draw_analyse_intensity_pie(
 
 
 def init_draw_Objects():
-    print("测试画图")
+    print("初始化画图")
     draw_analyse_attitude_tend(
         p_y=analysis_processer.get_P()['data'],
         p_x=analysis_processer.get_P()['date'],
@@ -190,7 +192,13 @@ def init_draw_Objects():
         60, 40
     )
 
-    print("我被执行了！")
+
+def ana_start_draw():
+    print("开始画图！")
+
+
+def set_process_text(my_str: str):
+    my_ui.my_page_data_analyse_textEdit.setText(my_str)
 
 
 def start_analyse():
