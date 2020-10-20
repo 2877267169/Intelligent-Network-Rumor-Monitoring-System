@@ -21,11 +21,12 @@ def cnt_words(cnt_file_path: str):
 
     for line in lines:
         line = line.replace('的', '').replace('啊', '').replace('吧', '').replace('，', '').replace('！', '').replace(
-            '。', '').replace('；', '').replace('#', '').replace('?', '').replace('了', '').replace('吗', '').split('\t')[-1]
+            '。', '').replace('；', '').replace('#', '').replace('?', '').replace('了', '').replace('吗', '').split('\t')[
+            -1]
         lac_res = lac.run(line)
         wordL = lac_res[0]
         # if cnt_1%17 == 0:
-            # word_cloude_create.send_process(int(30+(30*(cnt_1/all_1))))
+        # word_cloude_create.send_process(int(30+(30*(cnt_1/all_1))))
         for word in wordL:
             if list(dic.keys()).count(word) == 0:
                 dic[word] = 1
@@ -54,7 +55,7 @@ class WordCloudeCreate(QThread):
         for file_path in data.get_all_path():
             word_cloude_create.send_process(int((50 * (cnt_0 / all_0))))
             cnt_words(cnt_file_path=file_path)
-            cnt_0+=1
+            cnt_0 += 1
 
         dic_b = dic.copy()
         list_b = []
@@ -66,15 +67,15 @@ class WordCloudeCreate(QThread):
         cnt_2 = 0
         all_2 = len(list_b)
         for line in list_b:
-            if cnt_2 %100 == 0:
-                word_cloude_create.send_process(int(50+(50*(cnt_2/all_2))))
-                print("working for %s..."%line[0])
+            if cnt_2 % 100 == 0:
+                word_cloude_create.send_process(int(50 + (50 * (cnt_2 / all_2))))
+                print("working for %s..." % line[0])
             dic_b[line[0]] = line[1]
             cnt_2 += 1
         word_cloude_create.send_process(100)
         self.send_cloude_dict.emit(dic, dic_b)
 
-    def send_process(self, step_process:int):
+    def send_process(self, step_process: int):
         self.send_graph_process_bar.emit(step_process)
 
 

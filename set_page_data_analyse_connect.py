@@ -100,7 +100,7 @@ def draw_analyse_attitude_pie(
     :return:
     """
     my_page_data_analyse_attitude_pie_graph_ax.cla()
-    my_page_data_analyse_attitude_pie_graph_ax.set_title("The Pie of PN Attitude")
+    my_page_data_analyse_attitude_pie_graph_ax.set_title("The Pie of PN Attitude Value")
     print("正在画态度饼图")
     my_page_data_analyse_attitude_pie_graph_ax.pie(
         [
@@ -174,6 +174,27 @@ def draw_analyse_intensity_pie(
 def init_draw_Objects():
     print("初始化画图")
     draw_analyse_attitude_tend(
+        p_x=[0],
+        p_y=[0],
+        n_x=[0],
+        n_y=[0]
+    )
+    draw_analyse_intensity_tend(
+        [0], [0], [0], [0]
+    )
+    draw_analyse_attitude_pie(
+        p_x=100,
+        p_x_str="waiting",
+        n_x=0,
+        n_x_str=""
+    )
+    draw_analyse_intensity_pie(
+        i_x=0,
+        i_x_str="",
+        none_x=100,
+        none_x_str="waiting"
+    )
+    """draw_analyse_attitude_tend(
         p_y=analysis_processer.get_P()['data'],
         p_x=analysis_processer.get_P()['date'],
         n_y=analysis_processer.get_N()['data'],
@@ -190,12 +211,42 @@ def init_draw_Objects():
     )
     draw_analyse_intensity_pie(
         60, 40
-    )
+    )"""
 
+
+def obj_sort(my_dict: dict):
+    cp = []
+    for i in range(len(my_dict['date'])):
+        cp.append([my_dict['date'][i], my_dict['data'][i]])
+
+    cp.sort(key=lambda x: x[0])
+
+    r = {
+        'date': [],
+        'data': []
+    }
+    for i in range(len(cp)):
+        r['date'].append(cp[i][0])
+        r['data'].append(cp[i][1])
+
+    return r
 
 def ana_start_draw():
     print("开始画图！")
+    P_json = obj_sort(analysis_processer.get_P())
+    N_json = obj_sort(analysis_processer.get_N())
 
+    draw_analyse_attitude_tend(
+        p_y=P_json['data'],
+        p_x=P_json['date'],
+        n_y=N_json['data'],
+        n_x=N_json['date']
+    )
+
+    p_sum = sum(list(P_json['data']))
+    n_sum = sum(list(N_json['data']))
+
+    draw_analyse_attitude_pie(p_x=p_sum, n_x=n_sum)
 
 def set_process_text(my_str: str):
     my_ui.my_page_data_analyse_textEdit.setText(my_str)
