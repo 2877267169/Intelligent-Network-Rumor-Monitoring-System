@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import os, sys
 
 import MainWindow
@@ -197,6 +197,7 @@ def start_analyse():
     print("即将进行数据分析")
     if set_page_corpus_connect.is_run_available is False:
         print("你貌似没有通过校验！")
+        QMessageBox.critical(my_ui.my_page_data_analyse, '错误', '你貌似还没有检验数据集的有效性', QMessageBox.Close)
         return
     analysis_processer.analise_message.set_path(set_page_corpus_connect.available_path)
     # 启动
