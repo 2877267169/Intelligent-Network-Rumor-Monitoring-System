@@ -15,8 +15,8 @@ def getSentiment():
     """
 
     cps_from_ui = set_page_corpus_connect.get_all_path()
-
     sentiment_base_dir = cps_from_ui[set_page_corpus_connect.path_para.dict]
+
     list_of_sentiment = []
     # 修改文件名称
     path = [
@@ -60,14 +60,18 @@ def getDegree():
     # over 程度不强烈            得分  1\n
     :return: 程度级别词分词后存放到 degree列表中\n
     """
+    cps_from_ui = set_page_corpus_connect.get_all_path()
+    sentiment_base_dir = cps_from_ui[set_page_corpus_connect.path_para.dict]
+
     degree = []
-    path = [r"D:\py\sentiment\most.txt",
-            r"D:\py\sentiment\very.txt",
-            r"D:\py\sentiment\more.txt",
-            r"D:\py\sentiment\ish.txt",
-            r"D:\py\sentiment\insufficiently.txt",
-            r"D:\py\sentiment\over.txt"
-            ]
+    path = [
+        os.path.join(sentiment_base_dir, "most.txt",),
+        os.path.join(sentiment_base_dir, "very.txt"),
+        os.path.join(sentiment_base_dir, "more.txt"),
+        os.path.join(sentiment_base_dir, "ish.txt"),
+        os.path.join(sentiment_base_dir, "insufficiently.txt"),
+        os.path.join(sentiment_base_dir, "over.txt")
+    ]
     for i in range(6):
         with open(path[i], "r", encoding="utf-8") as f:
             l = f.readlines()
