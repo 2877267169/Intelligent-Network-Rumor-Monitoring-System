@@ -12,6 +12,7 @@ import set_page_train_connect
 import set_page_hot_connect
 import set_page_data_analyse_connect
 import matplotlib
+matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 

@@ -1,6 +1,9 @@
 import MainWindow
 import wordcloud
 # matplotlib 和qt链接的包
+# 修复打包的问题
+import matplotlib
+matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 from c_word_cloude import word_clouad_create

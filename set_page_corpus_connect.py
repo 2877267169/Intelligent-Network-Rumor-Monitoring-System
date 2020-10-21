@@ -9,7 +9,9 @@ from data import transform_json_to_txt
 from data import bert_train_complex
 import running_state
 import json
-
+# 修复打包的问题
+import matplotlib
+matplotlib.use("Agg")
 # matplotlib 和qt链接的包
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt

@@ -9,6 +9,9 @@ import running_state
 import json
 from analysis import analysis_processer
 # matplotlib 和qt链接的包
+# 修复打包的问题
+import matplotlib
+matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
