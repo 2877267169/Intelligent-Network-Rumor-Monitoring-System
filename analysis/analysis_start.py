@@ -78,6 +78,8 @@ def start(work_path: str):
             show_time(start_t=start_t, p=(cnt / len(path)))
         cnt += 1
 
+
+
     with open(os.path.join(work_path, "P.json"), 'w+', encoding='utf-8') as f:
         json.dump(
             file_tools.transformer_direction(P_modification),

@@ -8,6 +8,11 @@ lac = LAC.LAC()
 
 
 def transformer_direction(my_dict_obj:dict):
+    """
+    将字典的格式转换成为
+    :param my_dict_obj:
+    :return:
+    """
     r = {
         "date": list(my_dict_obj.keys()),
         "data": list(my_dict_obj.values())

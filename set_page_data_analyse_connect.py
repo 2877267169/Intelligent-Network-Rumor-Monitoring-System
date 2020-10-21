@@ -78,11 +78,12 @@ def draw_analyse_attitude_tend(
     :param n_y: 负向态度的y(数据)
     :return: None
     """
+    p_x_num = list(range(len(p_x)))
     my_page_data_analyse_attitude_tend_graph_ax.cla()
     my_page_data_analyse_attitude_tend_graph_ax.set_title("The Tend Graph of Attitude")
     for tick in my_page_data_analyse_attitude_tend_graph_ax.get_xticklabels():
         tick.set_rotation(300)
-    my_page_data_analyse_attitude_tend_graph_ax.plot(p_x, p_y)
+    my_page_data_analyse_attitude_tend_graph_ax.plot(p_x_num, p_y)
     my_page_data_analyse_attitude_tend_graph_ax.plot(n_x, n_y)
     my_page_data_analyse_attitude_tend_graph_FC.draw()
 
@@ -135,12 +136,21 @@ def draw_analyse_intensity_tend(
     :param none_y: 态度平平的y(数据)
     :return: None
     """
+    i_x_num = list(range(len(i_x)))
     my_page_data_analyse_intensity_tend_graph_ax.cla()
     my_page_data_analyse_intensity_tend_graph_ax.set_title("Tend of Intensity")
+    my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
     for tick in my_page_data_analyse_intensity_tend_graph_ax.get_xticklabels():
         tick.set_rotation(300)
-    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x, i_y)
+    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x_num, i_y)# 这里注意，第一个是数字列表，第二个是字符列表
     my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y)
+
+    my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
+    print("MAX: %d"% max(max(i_y), max(none_y)))
+    print(i_y)
+    print(i_x)
+    print(none_y)
+    print(none_x)
     my_page_data_analyse_intensity_tend_graph_FC.draw()
 
 
@@ -237,9 +247,14 @@ def obj_sort(my_dict: dict):
 
 def ana_start_draw():
     print("开始画图！")
+
+    # 获取数据！
     P_json = obj_sort(analysis_processer.get_P())
     N_json = obj_sort(analysis_processer.get_N())
+    I_json = obj_sort(analysis_processer.get_I())
+    none_json = obj_sort(analysis_processer.get_none())
 
+    # 画折线图！
     draw_analyse_attitude_tend(
         p_y=P_json['data'],
         p_x=P_json['date'],
@@ -247,10 +262,25 @@ def ana_start_draw():
         n_x=N_json['date']
     )
 
+    draw_analyse_intensity_tend(
+        i_y=I_json['data'],
+        i_x=I_json['date'],
+        none_y=none_json['data'],
+        none_x=none_json['date']
+    )
+
+    # 计算饼图数据
     p_sum = sum(list(P_json['data']))
     n_sum = sum(list(N_json['data']))
 
+    i_num = sum(list(I_json['data']))
+    none_num = sum(list(none_json['data']))
+
+    # 画饼图
     draw_analyse_attitude_pie(p_x=p_sum, n_x=n_sum)
+    draw_analyse_intensity_pie(i_x=i_num, none_x=none_num)
+
+    # 画图完毕，重新启用按钮
     my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(False)
     return
 

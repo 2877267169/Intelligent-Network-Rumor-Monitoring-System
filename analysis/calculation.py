@@ -1,6 +1,6 @@
 from analysis.AnaStruct import Num, WeiBo
 
-threshold = 3
+threshold = 5
 def calc(num: Num):
     weibo = WeiBo()
     # 得分后的乘的数，是可以更改的。

@@ -50,7 +50,7 @@ def get_formatted_json_file(json_file_name: str):
     if os.path.isfile(
             os.path.join(set_page_corpus_connect.available_path, json_file_name)
     ) is True:
-        with open(os.path.join(set_page_corpus_connect.available_path, "P.json"), 'r', encoding='utf-8') as f:
+        with open(os.path.join(set_page_corpus_connect.available_path, json_file_name), 'r', encoding='utf-8') as f:
             my_obj: dict = json.load(f)
             for i in range(len(my_obj['date'])):
                 my_obj['date'][i] = str(my_obj['date'][i])[5:] # 此处去掉了年份信息，然而不能现在去掉
@@ -65,24 +65,15 @@ def get_P():
 
 
 def get_N():
-    if os.path.isfile(
-            os.path.join(set_page_corpus_connect.available_path, "N.json")
-    ) is True:
-        with open(os.path.join(set_page_corpus_connect.available_path, "N.json"), 'r', encoding='utf-8') as f:
-            my_obj = json.load(f)
-            for i in range(len(my_obj['date'])):
-                my_obj['date'][i] = str(my_obj['date'][i])[5:]
-        return my_obj
-    else:
-        return {"date": ["error"], "data": [0]}
+    return get_formatted_json_file("N.json")
 
 
 def get_I():
-    return test_obj
+    return get_formatted_json_file("I.json")
 
 
 def get_none():
-    return test_obj
+    return get_formatted_json_file("none.json")
 
 
 my_ana_path = ""
