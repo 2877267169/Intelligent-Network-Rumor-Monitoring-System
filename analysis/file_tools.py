@@ -1,5 +1,7 @@
 from data import data_ops
 import LAC
+import set_page_corpus_connect
+import os, sys
 
 data = data_ops.Data_ops(r"E:\py\test_dataset")
 lac = LAC.LAC()
@@ -11,13 +13,21 @@ def getSentiment():
 
     :return: 获取评价和情感的列表
     """
+
+    cps_from_ui = set_page_corpus_connect.get_all_path()
+
+    sentiment_base_dir = cps_from_ui[set_page_corpus_connect.path_para.dict]
     list_of_sentiment = []
     # 修改文件名称
     path = [
-        r"E:\py\sentiment\负面评价词语（中文）.txt",
-        r"E:\py\sentiment\负面情感词语（中文）.txt",
-        r"E:\py\sentiment\正面评价词语（中文）.txt",
-        r"E:\py\sentiment\正面情感词语（中文）.txt"
+        # r"E:\py\sentiment\负面评价词语（中文）.txt",
+        os.path.join(sentiment_base_dir, "负面评价词语（中文）_utf_8.txt"),
+        # r"E:\py\sentiment\负面情感词语（中文）.txt",
+        os.path.join(sentiment_base_dir, "负面情感词语（中文）_utf_8.txt"),
+        # r"E:\py\sentiment\正面评价词语（中文）.txt",
+        os.path.join(sentiment_base_dir, "正面评价词语（中文）_utf_8.txt"),
+        # r"E:\py\sentiment\正面情感词语（中文）.txt"
+        os.path.join(sentiment_base_dir, "正面情感词语（中文）_utf_8.txt")
     ]
     for i in range(4):
         with open(path[i], "r", encoding="utf-8") as f:
@@ -51,12 +61,12 @@ def getDegree():
     :return: 程度级别词分词后存放到 degree列表中\n
     """
     degree = []
-    path = [r"E:\py\sentiment\most.txt",
-            r"E:\py\sentiment\very.txt",
-            r"E:\py\sentiment\more.txt",
-            r"E:\py\sentiment\ish.txt",
-            r"E:\py\sentiment\insufficiently.txt",
-            r"E:\py\sentiment\over.txt"
+    path = [r"D:\py\sentiment\most.txt",
+            r"D:\py\sentiment\very.txt",
+            r"D:\py\sentiment\more.txt",
+            r"D:\py\sentiment\ish.txt",
+            r"D:\py\sentiment\insufficiently.txt",
+            r"D:\py\sentiment\over.txt"
             ]
     for i in range(6):
         with open(path[i], "r", encoding="utf-8") as f:

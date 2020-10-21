@@ -16,8 +16,9 @@ import matplotlib.pyplot as plt
 
 is_run_available = False
 is_train_available = False
-is_path_available = False # 路径可用性
+is_path_available = False  # 路径可用性
 available_path = ""
+
 
 # my_ui = MainWindow.Ui_MainWindow()
 class PathPara():
@@ -58,7 +59,7 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     # 按钮
     ui.my_page_corpus_button_fromJson.clicked.connect(get_user_input_and_set_to_json_lineEdit)
     ui.my_page_corpus_button_workDir.clicked.connect(get_user_input_and_set_to_workDir)
-    ui.my_page_corpus_button_directionary.clicked.connect(get_user_input_and_set_to_directionary_lineEdit)
+    ui.my_page_corpus_button_directionary.clicked.connect(get_user_input_and_set_to_directory_lineEdit)
 
     # 命令按钮
     ui.my_page_corpus_commandLinkButton_verify.clicked.connect(verify_files)
@@ -111,11 +112,12 @@ def get_user_input_and_set_to_workDir():
     my_ui.my_page_train_lineEdit_data_dir.setText(dir_path)
 
 
-def get_user_input_and_set_to_directionary_lineEdit():
+def get_user_input_and_set_to_directory_lineEdit():
     global my_ui
-    file_path, file_type = QFileDialog.getOpenFileName(my_ui.my_page_corpus_lineEdit_directory, "Select txt file", '.',
-                                                       "txt file(*.txt)")
-    my_ui.my_page_corpus_lineEdit_directory.setText(file_path)
+    sentiment_path = QFileDialog.getExistingDirectory(my_ui.my_page_corpus_lineEdit_directory,
+                                                      "Select Sentiment dir",
+                                                      '.')
+    my_ui.my_page_corpus_lineEdit_directory.setText(sentiment_path)
 
 
 def verify_files():
@@ -127,7 +129,9 @@ def verify_files():
     work_path = my_ui.my_page_corpus_lineEdit_workPath.text()
     dictionary = my_ui.my_page_corpus_lineEdit_directory.text()
 
-    if os.path.isfile(json_file_path) and os.path.isdir(work_path) and (dictionary == '' or os.path.isfile(dictionary)):
+    if os.path.isfile(json_file_path)\
+            and os.path.isdir(work_path) \
+            and (os.path.isdir(dictionary) and os.path.isfile(os.path.join(dictionary, "sentiment.ini"))):
         # 校验成功
         ptr_message('校验成功')
         # 保存数据

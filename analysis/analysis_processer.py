@@ -39,17 +39,30 @@ test_obj2 = {
 }
 
 
-def get_P():
+def get_formatted_json_file(json_file_name: str):
+    """
+    获取经过格式化的json
+
+
+    :param json_file_name:要获得的json文件，是 P.json, N.json, I.json, none.json中的一个。
+    :return:
+    """
     if os.path.isfile(
-            os.path.join(set_page_corpus_connect.available_path, "P.json")
+            os.path.join(set_page_corpus_connect.available_path, json_file_name)
     ) is True:
         with open(os.path.join(set_page_corpus_connect.available_path, "P.json"), 'r', encoding='utf-8') as f:
-            my_obj:dict = json.load(f)
+            my_obj: dict = json.load(f)
             for i in range(len(my_obj['date'])):
-                my_obj['date'][i] = str(my_obj['date'][i])[5:]
+                my_obj['date'][i] = str(my_obj['date'][i])[5:] # 此处去掉了年份信息，然而不能现在去掉
+                pass
         return my_obj
     else:
-        return {"date":["error"], "data":[0]}
+        return {"date": ["error"], "data": [0]}
+
+
+def get_P():
+    return get_formatted_json_file("P.json")
+
 
 def get_N():
     if os.path.isfile(

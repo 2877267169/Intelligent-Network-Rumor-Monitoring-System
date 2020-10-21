@@ -231,6 +231,7 @@ def obj_sort(my_dict: dict):
 
     return r
 
+
 def ana_start_draw():
     print("开始画图！")
     P_json = obj_sort(analysis_processer.get_P())
@@ -247,6 +248,8 @@ def ana_start_draw():
     n_sum = sum(list(N_json['data']))
 
     draw_analyse_attitude_pie(p_x=p_sum, n_x=n_sum)
+    my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(False)
+    return
 
 def set_process_text(my_str: str):
     my_ui.my_page_data_analyse_textEdit.setText(my_str)
@@ -260,4 +263,5 @@ def start_analyse():
         return
     analysis_processer.analise_message.set_path(set_page_corpus_connect.available_path)
     # 启动
+    my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(True)
     analysis_processer.analise_message.start()
