@@ -31,5 +31,8 @@ class WeiBo:
     P_modification:消极情感记录
     """
     def __init__(self):
-        self.P_modification = 0
-        self.N_modification = 0
+        self.P_enum = 0
+        self.N_enum = 0
+        self.I_enum = 0  # 激烈
+        self.none_enum = 0
+

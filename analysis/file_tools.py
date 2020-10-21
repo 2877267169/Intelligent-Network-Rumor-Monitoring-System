@@ -7,6 +7,14 @@ data = data_ops.Data_ops(r"E:\py\test_dataset")
 lac = LAC.LAC()
 
 
+def transformer_direction(my_dict_obj:dict):
+    r = {
+        "date": list(my_dict_obj.keys()),
+        "data": list(my_dict_obj.values())
+    }
+    return r
+
+
 # 获取评价和情感的列表
 def getSentiment():
     """

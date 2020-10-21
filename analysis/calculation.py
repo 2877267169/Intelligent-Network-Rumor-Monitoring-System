@@ -1,6 +1,6 @@
 from analysis.AnaStruct import Num, WeiBo
 
-
+threshold = 3
 def calc(num: Num):
     weibo = WeiBo()
     # 得分后的乘的数，是可以更改的。
@@ -22,5 +22,18 @@ def calc(num: Num):
     # over = num.overNum*1.1
     weibo.P_modification = P_modification
     weibo.N_modification = N_modification
+    weibo.P_enum = 0
+    weibo.I_enum = 0
+    weibo.N_enum = 0
+    weibo.none_enum = 0
+    if P_modification > threshold and N_modification > threshold:
+        weibo.I_enum = 1
+    elif (P_modification < threshold and N_modification < threshold) or P_modification == N_modification:
+        weibo.none_enum = 1
+    elif P_modification > N_modification and ((P_modification > threshold and N_modification < threshold) or (
+            P_modification < threshold and N_modification > threshold)):
+        weibo.P_enum = 1
+    else:
+        weibo.N_enum = 1
 
     return weibo
