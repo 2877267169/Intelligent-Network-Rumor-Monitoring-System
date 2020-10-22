@@ -13,11 +13,11 @@ def get_threshold():
     if os.path.isfile("threshold.ini") is False:
         with open('threshold.ini', 'w+', encoding='utf-8') as f:
             f.write("3")
-        return 3
+        return 3.0
     else:
         with open('threshold.ini', 'r', encoding='utf-8') as f:
             a = f.readline().replace('\n', '')
-        return int(a)
+        return float(a)
 
 
 def calc_present(big: int, small: int):
@@ -34,8 +34,8 @@ def calc(num: Num):
     threshold = get_threshold()  # 计算阀值，默认值为 3
     weibo = WeiBo()
     # 得分后的乘的数，是可以更改的。
-    P_modification = num.ppnum_modification + (num.pqnum_modification)  # 正向得分
-    N_modification = num.npnum_modification + (num.nqnum_modification)  # 负面得分
+    P_modification = num.ppnum_modification + (num.pqnum_modification*1.1)  # 正向得分
+    N_modification = num.npnum_modification + (num.nqnum_modification*1.1)  # 负面得分
     # 言辞激烈程度得分
     # 程度等级的词汇的个数
     # most 程度最强烈  得分 6
