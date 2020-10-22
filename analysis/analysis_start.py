@@ -78,6 +78,24 @@ def start(work_path: str):
             show_time(start_t=start_t, p=(cnt / len(path)))
         cnt += 1
 
+    P_keys = list(P_modification.keys())
+    N_keys = list(N_modification.keys())
+    I_keys = list(I_enum.keys())
+    none_keys = list(none_enum.keys())
+    # print("hsgdfhjsd gjf sdghjfgsdhjfsdhjfgSDHJFGASDHJFGHJSDFGHMSDGFHJKSDGFJKGSDKFGHSDJKFGKSDHJG")
+    # print(P_keys[2])
+    for i in P_keys:
+        if i not in N_keys :
+            N_modification[i] = 0
+    for i in N_keys :
+        if i not in P_keys :
+            P_modification[i] = 0
+    for i in I_keys :
+        if i not in none_keys :
+            none_enum[i] = 0
+    for i in none_keys :
+        if i not in I_keys :
+            I_enum[i] = 0
 
 
     with open(os.path.join(work_path, "P.json"), 'w+', encoding='utf-8') as f:
