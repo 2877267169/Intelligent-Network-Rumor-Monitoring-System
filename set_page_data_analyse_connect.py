@@ -83,8 +83,9 @@ def draw_analyse_attitude_tend(
     my_page_data_analyse_attitude_tend_graph_ax.set_title("The Tend Graph of Attitude")
     for tick in my_page_data_analyse_attitude_tend_graph_ax.get_xticklabels():
         tick.set_rotation(300)
-    my_page_data_analyse_attitude_tend_graph_ax.plot(p_x_num, p_y)
-    my_page_data_analyse_attitude_tend_graph_ax.plot(n_x, n_y)
+    my_page_data_analyse_attitude_tend_graph_ax.plot(p_x_num, p_y, label='Positive Value')
+    my_page_data_analyse_attitude_tend_graph_ax.plot(n_x, n_y, label='Negative Value')
+    my_page_data_analyse_attitude_tend_graph_ax.legend()
     my_page_data_analyse_attitude_tend_graph_FC.draw()
 
 
@@ -142,8 +143,9 @@ def draw_analyse_intensity_tend(
     my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
     for tick in my_page_data_analyse_intensity_tend_graph_ax.get_xticklabels():
         tick.set_rotation(300)
-    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x_num, i_y)# 这里注意，第一个是数字列表，第二个是字符列表
-    my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y)
+    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x_num, i_y, label='Intensity Value')# 这里注意，第一个是数字列表，第二个是字符列表
+    my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y, label='Tine Attitude Value')
+    my_page_data_analyse_intensity_tend_graph_ax.legend()
 
     my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
     print("MAX: %d"% max(max(i_y), max(none_y)))
