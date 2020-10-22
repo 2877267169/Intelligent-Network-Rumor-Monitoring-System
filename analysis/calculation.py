@@ -1,7 +1,27 @@
 from analysis.AnaStruct import Num, WeiBo
+import os,sys
 
-threshold = 5
+
+def get_threshold():
+    """
+    将阀值数值写入配置文件
+
+    这个函数可以读取该文件并返回阀值
+
+    :return: 一个int，内容是阀值
+    """
+    if os.path.isfile("threshold.ini") is False:
+        with open('threshold.ini', 'w+', encoding='utf-8') as f:
+            f.write("3")
+        return 3
+    else:
+        with open('threshold.ini', 'r', encoding='utf-8') as f:
+            a = f.readline().replace('\n', '')
+        return int(a)
+
+
 def calc(num: Num):
+    threshold = get_threshold() # 计算阀值，默认值为 3
     weibo = WeiBo()
     # 得分后的乘的数，是可以更改的。
     P_modification = num.ppnum_modification + (num.pqnum_modification)  # 正向得分
