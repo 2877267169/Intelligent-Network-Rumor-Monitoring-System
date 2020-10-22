@@ -1,5 +1,5 @@
 from analysis.AnaStruct import Num, WeiBo
-import os,sys
+import os, sys
 
 
 def get_threshold():
@@ -20,8 +20,18 @@ def get_threshold():
         return int(a)
 
 
+def calc_present(big: int, small: int):
+    """
+    计算small占big的百分之多少
+    """
+    if big == 0:
+        print("error big=%d, small=%d" % (big, small))
+        return -1
+    return small / big
+
+
 def calc(num: Num):
-    threshold = get_threshold() # 计算阀值，默认值为 3
+    threshold = get_threshold()  # 计算阀值，默认值为 3
     weibo = WeiBo()
     # 得分后的乘的数，是可以更改的。
     P_modification = num.ppnum_modification + (num.pqnum_modification)  # 正向得分

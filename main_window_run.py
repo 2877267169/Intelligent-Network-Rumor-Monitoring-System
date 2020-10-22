@@ -19,15 +19,27 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-MY_DEBUG = True
 
 
 def f_debug():
     """
     会在调试变量为True时候执行本函数
     """
-    ui.frame_8.setVisible(False)# 检测报告
-    ui.frame_2.setVisible(False)# 谣言预警
+    my_debug = "False"
+
+    if os.path.isfile("DEBUG") is False:
+        with open('DEBUG', 'w+', encoding='utf-8') as f:
+            f.write("False")
+        my_debug = "False"
+    else:
+        with open('DEBUG', 'r', encoding='utf-8') as f:
+            a = f.readline().replace('\n', '')
+        my_debug = a
+
+    if my_debug != "True":
+        # 有且仅有my_debug==True的时候，下面的代码才会执行！
+        ui.frame_8.setVisible(False)  # 检测报告
+        ui.frame_2.setVisible(False)  # 谣言预警
 
 
 def set_all_connect(ui: MainWindow):
@@ -40,8 +52,7 @@ def set_all_connect(ui: MainWindow):
     print("set_page_data_analise_connect")
     set_page_data_analyse_connect.set_page_data_analyse_connect(ui=ui)
 
-    if MY_DEBUG is True:
-        f_debug()
+    f_debug()
 
 
 if __name__ == '__main__':
