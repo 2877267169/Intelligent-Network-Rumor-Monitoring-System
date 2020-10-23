@@ -1,3 +1,8 @@
+"""
+这个文件是连接QT界面的文件
+放置信号与槽的设置代码
+"""
+
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
 

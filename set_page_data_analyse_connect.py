@@ -147,7 +147,7 @@ def draw_analyse_intensity_tend(
     my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y, label='Tine Attitude Value')
     my_page_data_analyse_intensity_tend_graph_ax.legend()
 
-    my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
+    # my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
     print("MAX: %d"% max(max(i_y), max(none_y)))
     print(i_y)
     print(i_x)

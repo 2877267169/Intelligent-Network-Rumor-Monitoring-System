@@ -1,3 +1,7 @@
+"""
+此文件链接界面的进度条以显示进度
+"""
+
 import time
 from analysis import analysis_processer
 
