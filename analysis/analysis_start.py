@@ -1,5 +1,7 @@
 import time
 import json, os
+
+from analysis.percentage import percentage
 from data import data_ops
 import LAC
 
@@ -96,7 +98,9 @@ def start(work_path: str):
     for i in none_keys :
         if i not in I_keys :
             I_enum[i] = 0
-
+    total = percentage(P_modification,N_modification,I_enum,none_enum)
+    for i in range(4) :
+        print(total[i])
 
     with open(os.path.join(work_path, "P.json"), 'w+', encoding='utf-8') as f:
         json.dump(
@@ -118,7 +122,32 @@ def start(work_path: str):
             file_tools.transformer_direction(none_enum),
             f, ensure_ascii=False
         )
+    #将生成的百分比字典携程json文件
+    #正向在一天中所占的百分比
+    with open(os.path.join(work_path, "P_percentage.json"), 'w+', encoding='utf-8') as f:
+        json.dump(
+            file_tools.transformer_direction(total[0]),
+            f, ensure_ascii=False
+        )
+    #负向在一天中所占的比例
+    with open(os.path.join(work_path, "N_percentage.json"), 'w+', encoding='utf-8') as f:
+        json.dump(
+            file_tools.transformer_direction(total[1]),
+            f, ensure_ascii=False
+        )
+    #激烈在一天中所占的百分比
+    with open(os.path.join(work_path, "I_percentage.json"), 'w+', encoding='utf-8') as f:
+        json.dump(
+            file_tools.transformer_direction(total[2]),
+            f, ensure_ascii=False
+        )
+    #none类型在一天中所占的比例
 
+    with open(os.path.join(work_path, "none_percentage.json"), 'w+', encoding='utf-8') as f:
+        json.dump(
+            file_tools.transformer_direction(total[3]),
+            f, ensure_ascii=False
+        )
 
 if __name__ == '__main__':
     start(r"E:\py\test_dataset")
