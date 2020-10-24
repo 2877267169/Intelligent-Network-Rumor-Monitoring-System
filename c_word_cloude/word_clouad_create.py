@@ -1,5 +1,6 @@
 import os
-import LAC
+# import LAC
+import jieba
 from PyQt5.QtCore import QThread, pyqtSignal
 
 from data.data_ops import Data_ops as Data
@@ -7,7 +8,7 @@ import set_page_hot_connect
 from data import data_ops
 
 dic = {}  # 全局字典变量
-lac = LAC.LAC()
+# lac = LAC.LAC()
 
 
 def cnt_words(cnt_file_path: str):
@@ -23,8 +24,9 @@ def cnt_words(cnt_file_path: str):
         line = line.replace('的', '').replace('啊', '').replace('吧', '').replace('，', '').replace('！', '').replace(
             '。', '').replace('；', '').replace('#', '').replace('?', '').replace('了', '').replace('吗', '').split('\t')[
             -1]
-        lac_res = lac.run(line)
-        wordL = lac_res[0]
+        # lac_res = lac.run(line)
+        # wordL = lac_res[0]
+        wordL = jieba.lcut(line)
         # if cnt_1%17 == 0:
         # word_cloude_create.send_process(int(30+(30*(cnt_1/all_1))))
         for word in wordL:

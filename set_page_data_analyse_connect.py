@@ -11,6 +11,7 @@ from analysis import analysis_processer
 # matplotlib 和qt链接的包
 # 修复打包的问题
 import matplotlib
+
 matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
@@ -143,12 +144,12 @@ def draw_analyse_intensity_tend(
     my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
     for tick in my_page_data_analyse_intensity_tend_graph_ax.get_xticklabels():
         tick.set_rotation(300)
-    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x_num, i_y, label='Intensity Value')# 这里注意，第一个是数字列表，第二个是字符列表
-    my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y, label='Tine Attitude Value')
+    my_page_data_analyse_intensity_tend_graph_ax.plot(i_x_num, i_y, label='Intensity Value')  # 这里注意，第一个是数字列表，第二个是字符列表
+    my_page_data_analyse_intensity_tend_graph_ax.plot(none_x, none_y, label='Tiny Attitude Value')
     my_page_data_analyse_intensity_tend_graph_ax.legend()
 
     # my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
-    print("MAX: %d"% max(max(i_y), max(none_y)))
+    print("MAX: %d" % max(max(i_y), max(none_y)))
     print(i_y)
     print(i_x)
     print(none_y)
@@ -285,6 +286,7 @@ def ana_start_draw():
     # 画图完毕，重新启用按钮
     my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(False)
     return
+
 
 def set_process_text(my_str: str):
     my_ui.my_page_data_analyse_textEdit.setText(my_str)

@@ -1,13 +1,14 @@
 from data import data_ops
-import LAC
+# import LAC
+import jieba
 import set_page_corpus_connect
 import os, sys
 
 data = data_ops.Data_ops(r"E:\py\test_dataset")
-lac = LAC.LAC()
+# lac = LAC.LAC()
 
 
-def transformer_direction(my_dict_obj:dict):
+def transformer_direction(my_dict_obj: dict):
     """
     将字典的格式转换成为
     :param my_dict_obj:
@@ -78,7 +79,7 @@ def getDegree():
 
     degree = []
     path = [
-        os.path.join(sentiment_base_dir, "most.txt",),
+        os.path.join(sentiment_base_dir, "most.txt", ),
         os.path.join(sentiment_base_dir, "very.txt"),
         os.path.join(sentiment_base_dir, "more.txt"),
         os.path.join(sentiment_base_dir, "ish.txt"),
@@ -115,16 +116,16 @@ def division(path):
     return p
 
 
-def participle(test):
+def participle(test: str):
     """
     对文本进行分词participle→分词 参数为字符串文本。\n
     :return: 分词后的列表
     """
     if len(test) == 0:
         test += " "
-    l = lac.run(test)
+    l = [jieba.lcut(test)]  # lac.run(test)
     if len(l) == 0:
-        l += " "
+        l.append([" "])
     return l
 
 

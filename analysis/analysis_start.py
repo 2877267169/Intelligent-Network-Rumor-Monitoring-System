@@ -3,7 +3,6 @@ import json, os
 
 from analysis.percentage import percentage
 from data import data_ops
-import LAC
 
 from analysis.file_tools import division, participle
 
@@ -14,8 +13,6 @@ from analysis.calculation import calc
 from analysis.time_processer import show_time
 from analysis import analysis_processer
 from analysis import file_tools
-
-lac = LAC.LAC()
 
 
 def start(work_path: str):
