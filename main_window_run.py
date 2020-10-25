@@ -3,8 +3,11 @@
 2020-10-13 22:53:53 李建广 加入了测试
 改名测试，克隆分支测试
 """
-
 import os, sys
+my_app_data = os.path.join(os.getenv("appdata"), "INRMS")
+if os.path.isdir(my_app_data) is False:
+    os.makedirs(my_app_data)
+
 import MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import ui_change
@@ -21,18 +24,19 @@ import matplotlib.pyplot as plt
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
+
 def f_debug():
     """
     会在调试变量为True时候执行本函数
     """
     my_debug = "False"
 
-    if os.path.isfile("DEBUG") is False:
-        with open('DEBUG', 'w+', encoding='utf-8') as f:
+    if os.path.isfile(os.path.join(my_app_data, "DEBUG")) is False:
+        with open(os.path.join(my_app_data, "DEBUG"), 'w+', encoding='utf-8') as f:
             f.write("False")
         my_debug = "False"
     else:
-        with open('DEBUG', 'r', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data, "DEBUG"), 'r', encoding='utf-8') as f:
             a = f.readline().replace('\n', '')
         my_debug = a
 

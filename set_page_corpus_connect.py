@@ -11,6 +11,9 @@ import running_state
 import json
 # 修复打包的问题
 import matplotlib
+
+from main_window_run import my_app_data
+
 matplotlib.use("Agg")
 # matplotlib 和qt链接的包
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -92,9 +95,9 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     # 测试时使用，故删除
     # my_ui.my_page_data_groupBox_for_graph.layout().addWidget(FigureCanvas(f))
 
-    if os.path.isfile("corpus.json") is True:
+    if os.path.isfile(os.path.join(my_app_data,"corpus.json")) is True:
         print("加载保存的路径...")
-        with open("corpus.json", 'r+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data,"corpus.json"), 'r+', encoding='utf-8') as f:
             paras = json.load(f)
         set_all_path(para=paras)
 
@@ -139,7 +142,7 @@ def verify_files():
         # 保存数据
         paras = get_all_path()
         available_path = paras[path_para.work_path]
-        with open("corpus.json", 'w+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data,"corpus.json"), 'w+', encoding='utf-8') as f:
             json.dump(paras, f, ensure_ascii=False, indent=4)
 
         is_run_available = True

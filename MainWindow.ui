@@ -518,7 +518,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="my_page_corpus">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -1939,7 +1939,7 @@ p, li { white-space: pre-wrap; }
                  </sizepolicy>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="tab">
                  <attribute name="title">
@@ -2076,40 +2076,49 @@ p, li { white-space: pre-wrap; }
            <string>谣言预警</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_11">
+           <item row="0" column="0" rowspan="2">
+            <widget class="QGroupBox" name="groupBox_18">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>100</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>Tend Analysis</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_14">
+              <item row="0" column="0">
+               <layout class="QGridLayout" name="my_page_warning_group"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="0" column="1">
-            <layout class="QGridLayout" name="my_page_warning_groupBox_for_graph"/>
+            <widget class="QGroupBox" name="groupBox_19">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>30</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="title">
+              <string>数据所见：</string>
+             </property>
+            </widget>
            </item>
-           <item row="0" column="0">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+           <item row="1" column="1">
+            <widget class="QGroupBox" name="groupBox_20">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>30</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
+             <property name="title">
+              <string>预警结论：</string>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>300</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="2">
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>300</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
+            </widget>
            </item>
           </layout>
          </widget>
