@@ -149,11 +149,11 @@ def draw_analyse_intensity_tend(
     my_page_data_analyse_intensity_tend_graph_ax.legend()
 
     # my_page_data_analyse_intensity_tend_graph_ax.set_ylim((0, max(max(i_y), max(none_y))))
-    print("MAX: %d" % max(max(i_y), max(none_y)))
-    print(i_y)
-    print(i_x)
-    print(none_y)
-    print(none_x)
+    # print("MAX: %d" % max(max(i_y), max(none_y)))
+    # print(i_y)
+    # print(i_x)
+    # print(none_y)
+    # print(none_x)
     my_page_data_analyse_intensity_tend_graph_FC.draw()
 
 

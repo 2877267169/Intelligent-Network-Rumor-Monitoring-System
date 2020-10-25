@@ -96,8 +96,7 @@ def start(work_path: str):
         if i not in I_keys :
             I_enum[i] = 0
     total = percentage(P_modification,N_modification,I_enum,none_enum)
-    for i in range(4) :
-        print(total[i])
+
 
     with open(os.path.join(work_path, "P.json"), 'w+', encoding='utf-8') as f:
         json.dump(
