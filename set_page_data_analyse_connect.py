@@ -294,11 +294,30 @@ def set_process_text(my_str: str):
 
 def start_analyse():
     print("即将进行数据分析")
+
     if set_page_corpus_connect.is_run_available is False:
         print("你貌似没有通过校验！")
         QMessageBox.critical(my_ui.my_page_data_analyse, '错误', '你貌似还没有检验数据集的有效性', QMessageBox.Close)
         return
-    analysis_processer.analise_message.set_path(set_page_corpus_connect.available_path)
+
+    base_path = set_page_corpus_connect.available_path
+    if (
+        os.path.isfile(os.path.join(base_path, "P.json")) and
+        os.path.isfile(os.path.join(base_path, "N.json")) and
+        os.path.isfile(os.path.join(base_path, "I.json")) and
+        os.path.isfile(os.path.join(base_path, "none.json"))
+    ) is True:
+        user_l = QMessageBox.question(
+            my_ui.my_page_data_analyse,
+            "检测到现有的缓存...",
+            "检测到了一个现有的缓存，是否从缓存中加载？\n选择“是” 确认加载，选择“否”重新进行计算分析。",
+            QMessageBox.Yes|QMessageBox.No
+        )
+        if user_l == QMessageBox.Yes:
+            print("跳过计算，直接分析")
+            ana_start_draw()
+            return
+    analysis_processer.analise_message.set_path(base_path)
     # 启动
     my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(True)
     analysis_processer.analise_message.start()
