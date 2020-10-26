@@ -310,12 +310,15 @@ def start_analyse():
         user_l = QMessageBox.question(
             my_ui.my_page_data_analyse,
             "检测到现有的缓存...",
-            "检测到了一个现有的缓存，是否从缓存中加载？\n选择“是” 确认加载，选择“否”重新进行计算分析。",
-            QMessageBox.Yes|QMessageBox.No
+            "检测到了一个现有的缓存，是否从缓存中加载？\n选择 \"是\" 确认加载，选择 \"否\" 重新进行计算分析。\n如果选择\"取消\", 则不会做任何更改。",
+            QMessageBox.Yes|QMessageBox.No|QMessageBox.Cancel
         )
         if user_l == QMessageBox.Yes:
             print("跳过计算，直接分析")
             ana_start_draw()
+            return
+        elif user_l == QMessageBox.Cancel:
+            print("取消")
             return
     analysis_processer.analise_message.set_path(base_path)
     # 启动
