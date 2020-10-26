@@ -4,7 +4,8 @@ import jieba
 import set_page_corpus_connect
 import os, sys
 
-data = data_ops.Data_ops(r"E:\py\test_dataset")
+# 特别注意：ops_data仅进行读文件，不对路径进行读取！！！
+ops_data = data_ops.Data_ops(r"")
 # lac = LAC.LAC()
 
 
@@ -110,7 +111,7 @@ def division(path):
     """
     if len(path) == 0:
         return
-    p = data.get_file_text(path).split("\t")
+    p = ops_data.get_file_text(path).split("\t")
     if len(p) == 0:
         return
     return p

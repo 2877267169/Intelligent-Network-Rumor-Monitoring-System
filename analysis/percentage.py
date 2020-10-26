@@ -11,16 +11,23 @@ def percentage(P: dict, N: dict, I: dict, none: dict):
     none_percentage = {}
     total = []
     for i in P.keys():
-        if P[i] == 0 and N[i] == 0 :
-            i+=1
-        P_percentage[i] = P[i] / (P[i] + N[i])
-        N_percentage[i] = N[i] / (P[i] + N[i])
+        # 值过于小，认为没有参考价值，所以做零处理
+        if (P[i] == 0 and N[i] == 0) or ((P[i] + N[i]) < 10):
+            # i += 1
+            P_percentage[i] = 0
+            N_percentage[i] = 0
+        else:
+            P_percentage[i] = P[i] / (P[i] + N[i])
+            N_percentage[i] = N[i] / (P[i] + N[i])
 
     for i in I.keys():
-        if I[i] == 0 and none[i] == 0 :
-            i+=1
-        I_percentage[i] = I[i] / (I[i] + none[i])
-        none_percentage[i] = none[i] / (I[i] + none[i])
+        if (I[i] == 0 and none[i] == 0) or ((I[i] + none[i]) < 10):
+            # i += 1
+            I_percentage[i] = 0
+            none_percentage[i] = 0
+        else:
+            I_percentage[i] = I[i] / (I[i] + none[i])
+            none_percentage[i] = none[i] / (I[i] + none[i])
     total.append(P_percentage)
     total.append(N_percentage)
     total.append(I_percentage)

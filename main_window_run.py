@@ -44,7 +44,7 @@ def f_debug():
     if my_debug != "True":
         # 有且仅有my_debug==True的时候，下面的代码才会执行！
         ui.frame_8.setVisible(False)  # 检测报告
-        ui.frame_2.setVisible(False)  # 谣言预警
+        # ui.frame_2.setVisible(False)  # 谣言预警
 
 
 def set_all_connect(ui: MainWindow):

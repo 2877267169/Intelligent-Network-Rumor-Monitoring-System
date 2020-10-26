@@ -10,39 +10,6 @@ import set_page_corpus_connect
 from analysis import analysis_start
 import os, sys, json
 
-test_obj = {
-    "date": [
-        "06-01",
-        "06-02",
-        "06-03",
-        "06-04",
-        "06-05"
-    ],
-    "data": [
-        10,
-        2,
-        20,
-        10,
-        15
-    ]
-}
-test_obj2 = {
-    "date": [
-        "06-01",
-        "06-02",
-        "06-03",
-        "06-04",
-        "06-05"
-    ],
-    "data": [
-        15,
-        10,
-        20,
-        2,
-        10
-    ]
-}
-
 
 def get_formatted_json_file(json_file_name: str):
     """
@@ -80,6 +47,14 @@ def get_I():
 def get_none():
     return get_formatted_json_file("none.json")
 
+
+def get_4_percentage():
+    return [
+        get_formatted_json_file("P_percentage.json"),
+        get_formatted_json_file("N_percentage.json"),
+        get_formatted_json_file("I_percentage.json"),
+        get_formatted_json_file("none_percentage.json")
+    ]
 
 my_ana_path = ""
 
@@ -131,3 +106,37 @@ def ana_start(path=""):
     print("分析结束！")
     analise_message.s_send_analyse_start_draw.emit()
     analise_message.f_send_my_analyse_process_bar(100)
+
+#
+# test_obj = {
+#     "date": [
+#         "06-01",
+#         "06-02",
+#         "06-03",
+#         "06-04",
+#         "06-05"
+#     ],
+#     "data": [
+#         10,
+#         2,
+#         20,
+#         10,
+#         15
+#     ]
+# }
+# test_obj2 = {
+#     "date": [
+#         "06-01",
+#         "06-02",
+#         "06-03",
+#         "06-04",
+#         "06-05"
+#     ],
+#     "data": [
+#         15,
+#         10,
+#         20,
+#         2,
+#         10
+#     ]
+# }

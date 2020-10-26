@@ -14,9 +14,10 @@ def set_connect(ui: MainWindow.Ui_MainWindow):
     ui.my_data_analize_button.clicked.connect(change_to_data)
     ui.my_warning_button.clicked.connect(change_to_warning)
     ui.my_hot_word_button.clicked.connect(change_to_hot)
+    ui.my_paper_button.clicked.connect(change_to_paper)
 
 
-def change_to_corpus(salf):
+def change_to_corpus():
     global my_ui
     print(0)
 
@@ -24,23 +25,26 @@ def change_to_corpus(salf):
     set_page_corpus_connect.re_draw()
 
 
-def change_to_train(salf):
+def change_to_train():
     print(1)
     my_ui.stackedWidget.setCurrentIndex(1)
     set_page_train_connect.re_draw()
 
 
-def change_to_data(salf):
+def change_to_data():
     print(2)
     my_ui.stackedWidget.setCurrentIndex(2)
 
 
-def change_to_warning(salf):
+def change_to_warning():
     print(3)
     my_ui.stackedWidget.setCurrentIndex(3)
 
 
-def change_to_hot(salf):
+def change_to_hot():
     print(4)
     my_ui.stackedWidget.setCurrentIndex(4)
 
+def change_to_paper():
+    print(5)
+    my_ui.stackedWidget.setCurrentIndex(5)

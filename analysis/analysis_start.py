@@ -83,20 +83,42 @@ def start(work_path: str):
     none_keys = list(none_enum.keys())
     # print("hsgdfhjsd gjf sdghjfgsdhjfsdhjfgSDHJFGASDHJFGHJSDFGHMSDGFHJKSDGFJKGSDKFGHSDJKFGKSDHJG")
     # print(P_keys[2])
-    for i in P_keys:
-        if i not in N_keys :
-            N_modification[i] = 0
-    for i in N_keys :
-        if i not in P_keys :
-            P_modification[i] = 0
-    for i in I_keys :
-        if i not in none_keys :
-            none_enum[i] = 0
-    for i in none_keys :
-        if i not in I_keys :
-            I_enum[i] = 0
-    total = percentage(P_modification,N_modification,I_enum,none_enum)
 
+    # P I 互补日期
+    for i in P_keys:
+        if i not in I_keys:
+            I_enum[i] = 0
+    for i in I_keys:
+        if i not in P_keys:
+            P_modification[i] = 0
+    # N none 互补日期
+    for i in N_keys:
+        if i not in none_keys:
+            none_enum[i] = 0
+    for i in none_keys:
+        if i not in N_keys:
+            N_modification[i] = 0
+    # 刷新键值
+    P_keys = list(P_modification.keys())
+    N_keys = list(N_modification.keys())
+    I_keys = list(I_enum.keys())
+    none_keys = list(none_enum.keys())
+
+    # PN互补日期
+    for i in P_keys:
+        if i not in N_keys:
+            N_modification[i] = 0
+    for i in N_keys:
+        if i not in P_keys:
+            P_modification[i] = 0
+    # I none互补日期
+    for i in I_keys:
+        if i not in none_keys:
+            none_enum[i] = 0
+    for i in none_keys:
+        if i not in I_keys:
+            I_enum[i] = 0
+    total = percentage(P_modification, N_modification, I_enum, none_enum)
 
     with open(os.path.join(work_path, "P.json"), 'w+', encoding='utf-8') as f:
         json.dump(
@@ -118,32 +140,33 @@ def start(work_path: str):
             file_tools.transformer_direction(none_enum),
             f, ensure_ascii=False
         )
-    #将生成的百分比字典携程json文件
-    #正向在一天中所占的百分比
+    # 将生成的百分比字典携程json文件
+    # 正向在一天中所占的百分比
     with open(os.path.join(work_path, "P_percentage.json"), 'w+', encoding='utf-8') as f:
         json.dump(
             file_tools.transformer_direction(total[0]),
             f, ensure_ascii=False
         )
-    #负向在一天中所占的比例
+    # 负向在一天中所占的比例
     with open(os.path.join(work_path, "N_percentage.json"), 'w+', encoding='utf-8') as f:
         json.dump(
             file_tools.transformer_direction(total[1]),
             f, ensure_ascii=False
         )
-    #激烈在一天中所占的百分比
+    # 激烈在一天中所占的百分比
     with open(os.path.join(work_path, "I_percentage.json"), 'w+', encoding='utf-8') as f:
         json.dump(
             file_tools.transformer_direction(total[2]),
             f, ensure_ascii=False
         )
-    #none类型在一天中所占的比例
+    # none类型在一天中所占的比例
 
     with open(os.path.join(work_path, "none_percentage.json"), 'w+', encoding='utf-8') as f:
         json.dump(
             file_tools.transformer_direction(total[3]),
             f, ensure_ascii=False
         )
+
 
 if __name__ == '__main__':
     start(r"E:\py\test_dataset")
