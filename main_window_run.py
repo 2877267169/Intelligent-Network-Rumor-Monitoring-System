@@ -15,6 +15,7 @@ import set_page_corpus_connect
 import set_page_train_connect
 import set_page_hot_connect
 import set_page_data_analyse_connect
+import set_page_warning_connect
 import matplotlib
 
 matplotlib.use("Agg")
@@ -55,6 +56,8 @@ def set_all_connect(ui: MainWindow):
     set_page_hot_connect.set_page_connect(ui=ui)
     print("set_page_data_analise_connect")
     set_page_data_analyse_connect.set_page_data_analyse_connect(ui=ui)
+    print("set_page_warning_connect")
+    set_page_warning_connect.set_warning_connect(ui=ui)
 
     f_debug()
 
