@@ -13,6 +13,9 @@ import json
 # matplotlib 和qt链接的包
 # 修复打包的问题
 import matplotlib
+
+from main_window_run import my_app_data
+
 matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
@@ -97,9 +100,9 @@ def set_page_train_connect(ui: MainWindow.Ui_MainWindow):
     # draw_pie()
 
     # 读取上一次的配置
-    if os.path.isfile('file_para.json') is True:
+    if os.path.isfile(os.path.join(my_app_data,'file_para.json')) is True:
         print('检测到配置文件, 现在加载')
-        with open('file_para.json', 'r+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data,'file_para.json'), 'r+', encoding='utf-8') as f:
             json_file_para = json.load(f)
             my_ui.my_page_train_lineEdit_data_dir.setText(json_file_para[file_parameters.data_dir])
             my_ui.my_page_train_lineEdit_bert_config_file.setText(json_file_para[file_parameters.bert_config_file])
@@ -260,7 +263,7 @@ def verify():
     else:
         QMessageBox.information(my_ui.my_page_train, "校验完成", "校验已成功完成，没有发现问题", QMessageBox.Ok)
         file_para = json.dumps(file_parameters, indent=4, ensure_ascii=False)
-        with open('file_para.json', 'w+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data,'file_para.json'), 'w+', encoding='utf-8') as f:
             f.write(file_para)
             print("保存了自定义配置")
 

@@ -1,7 +1,9 @@
 from analysis.AnaStruct import Num, WeiBo
 import os, sys
 
+from main_window_run import my_app_data
 
+#####################配置文件###########################
 def get_threshold():
     """
     将阀值数值写入配置文件
@@ -10,12 +12,12 @@ def get_threshold():
 
     :return: 一个int，内容是阀值
     """
-    if os.path.isfile("threshold.ini") is False:
-        with open('threshold.ini', 'w+', encoding='utf-8') as f:
+    if os.path.isfile(os.path.join(my_app_data, "threshold.ini")) is False:
+        with open(os.path.join(my_app_data, "threshold.ini"), 'w+', encoding='utf-8') as f:
             f.write("3")
         return 3.0
     else:
-        with open('threshold.ini', 'r', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data, "threshold.ini"), 'r', encoding='utf-8') as f:
             a = f.readline().replace('\n', '')
         return float(a)
 
