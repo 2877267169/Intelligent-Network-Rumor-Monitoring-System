@@ -4,6 +4,7 @@ import set_page_train_connect
 import set_page_corpus_connect
 
 
+
 def set_connect(ui: MainWindow.Ui_MainWindow):
     global my_ui
     print('正在设置')
@@ -14,7 +15,7 @@ def set_connect(ui: MainWindow.Ui_MainWindow):
     ui.my_data_analize_button.clicked.connect(change_to_data)
     ui.my_warning_button.clicked.connect(change_to_warning)
     ui.my_hot_word_button.clicked.connect(change_to_hot)
-    ui.my_paper_button.clicked.connect(change_to_paper)
+    # ui.my_paper_button.clicked.connect(change_to_paper)
 
 
 def change_to_corpus():
@@ -45,6 +46,5 @@ def change_to_hot():
     print(4)
     my_ui.stackedWidget.setCurrentIndex(4)
 
-def change_to_paper():
-    print(5)
-    my_ui.stackedWidget.setCurrentIndex(5)
+
+

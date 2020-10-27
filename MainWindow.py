@@ -1140,6 +1140,9 @@ class Ui_MainWindow(object):
         self.gridLayout_17.addWidget(self.groupBox_22, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.my_page_paper)
         self.gridLayout.addWidget(self.stackedWidget, 1, 0, 1, 1)
+        self.debug_mode_label = QtWidgets.QLabel(self.centralwidget)
+        self.debug_mode_label.setObjectName("debug_mode_label")
+        self.gridLayout.addWidget(self.debug_mode_label, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1448, 23))
@@ -1257,6 +1260,7 @@ class Ui_MainWindow(object):
         self.my_page_hot_saveas_pushButton.setText(_translate("MainWindow", "另存为..."))
         self.groupBox_13.setTitle(_translate("MainWindow", "show page"))
         self.groupBox_22.setTitle(_translate("MainWindow", "检测报告"))
+        self.debug_mode_label.setText(_translate("MainWindow", "Debug Mode"))
         self.menuversion.setTitle(_translate("MainWindow", "version"))
         self.action0_1_201025.setText(_translate("MainWindow", "0.1.20201006.3"))
 import page_icon_rc_rc
