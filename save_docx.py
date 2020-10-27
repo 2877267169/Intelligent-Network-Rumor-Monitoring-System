@@ -1,4 +1,5 @@
 import os
+import time
 
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
 import docx
@@ -14,6 +15,7 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
     :return: None
     """
     base_dir = my_app_img_dir
+    localtime = time.asctime(time.localtime(time.time()))
     if (
             os.path.isfile(os.path.join(base_dir, "corpus.png")) and
             os.path.isfile(os.path.join(base_dir, "train_res.png")) and
@@ -30,6 +32,9 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
             '.',  # 起始路径
             "Office Document Files (*.docx)"
         )
+        if filename_choose=='':
+            print("取消")
+            return
         print("从缓存加载..")
         # ######################## 开始了docx的处理 #################
         doc = docx.Document(r"Template/Template.docx")
@@ -66,6 +71,16 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
                 p.runs[0].add_break()  # 添加一个折行
                 p.runs[0].add_picture(os.path.join(base_dir, "word_cloud.png"), width=Cm(14.64))
                 p.runs[0].add_break()  # 添加一个折行
+
+        for p in doc.paragraphs:
+            if '我是日期' in p.text:
+                inline = p.runs
+                for i in inline:
+                    if '我是日期' in i.text:
+                        text = i.text.replace('我是日期', localtime)
+                        i.text = text
+        # if '我是时间' in p.text:
+        #     p.runs[0].text = p.runs[0].text.replace('我是日期', localtime)
         try:
             doc.save(filename_choose)
             QMessageBox.information(ui.statusbar, "完成", "成功完成了生成", QMessageBox.Ok)
