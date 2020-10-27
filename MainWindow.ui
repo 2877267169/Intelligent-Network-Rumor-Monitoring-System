@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1384</width>
-    <height>815</height>
+    <width>1448</width>
+    <height>866</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -518,7 +518,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="my_page_corpus">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -1907,7 +1907,7 @@ p, li { white-space: pre-wrap; }
                  </widget>
                 </item>
                 <item row="0" column="1">
-                 <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                 <widget class="QDoubleSpinBox" name="my_page_data_analyse_doubleSpinBox">
                   <property name="singleStep">
                    <double>0.010000000000000</double>
                   </property>
@@ -1919,16 +1919,23 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="my_page_data_analyse_set_default_pushButton">
                 <property name="text">
                  <string>重置为默认</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCommandLinkButton" name="my_page_analyse_load_commandLinkButton">
+               <widget class="QCommandLinkButton" name="my_page_data_analyse_load_commandLinkButton">
                 <property name="text">
-                 <string>分析 (从现有缓存)</string>
+                 <string>分析 (加载现有缓存)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCommandLinkButton" name="my_page_data_analyse_recalc_commandLinkButton">
+                <property name="text">
+                 <string>重新计算(从新的阈值)</string>
                 </property>
                </widget>
               </item>
@@ -1944,6 +1951,13 @@ p, li { white-space: pre-wrap; }
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="my_page_data_analyse_save_pushButton">
+                <property name="text">
+                 <string>重新写入此图片</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -2200,7 +2214,7 @@ p, li { white-space: pre-wrap; }
            <item row="0" column="0" colspan="3">
             <widget class="QProgressBar" name="my_page_warning_progressBar">
              <property name="value">
-              <number>24</number>
+              <number>0</number>
              </property>
             </widget>
            </item>
@@ -2322,7 +2336,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1384</width>
+     <width>1448</width>
      <height>23</height>
     </rect>
    </property>

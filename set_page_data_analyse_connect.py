@@ -12,6 +12,8 @@ from analysis import analysis_processer
 # 修复打包的问题
 import matplotlib
 
+from main_window_run import my_app_img_dir
+
 matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
@@ -43,6 +45,10 @@ def set_page_data_analyse_connect(ui: MainWindow.Ui_MainWindow):
 
     # 信号与槽的链接
     ui.my_page_data_analyse_commandLinkButton_start.clicked.connect(start_analyse)
+    ui.my_page_data_analyse_load_commandLinkButton.clicked.connect(load)
+    ui.my_page_data_analyse_doubleSpinBox.valueChanged.connect(write_threshold)
+    ui.my_page_data_analyse_set_default_pushButton.clicked.connect(set_default)
+    ui.my_page_data_analyse_save_pushButton.clicked.connect(my_save)
     analysis_processer.analise_message.s_send_analyse_process_bar.connect(set_ana_process_bar)
     analysis_processer.analise_message.s_send_analyse_process_text.connect(set_process_text)
     analysis_processer.analise_message.s_send_analyse_start_draw.connect(ana_start_draw)
@@ -105,6 +111,11 @@ def draw_analyse_attitude_pie(
     :param n_x_str:
     :return:
     """
+    if p_x_str == "Positive":
+        p_x_str += "(%d%%)" % (p_x * 100)
+    if n_x_str == "Negative":
+        n_x_str += "(%d%%)" % (n_x * 100)
+
     my_page_data_analyse_attitude_pie_graph_ax.cla()
     my_page_data_analyse_attitude_pie_graph_ax.set_title("The Pie of PN Attitude Value")
     print("正在画态度饼图")
@@ -172,6 +183,11 @@ def draw_analyse_intensity_pie(
     :param none_x_str:
     :return:
     """
+    if i_x_str == "Intense":
+        i_x_str += "(%d%%)" % (i_x * 100)
+    if none_x_str == "Tiny Attitude":
+        none_x_str += "(%d%%)" % (none_x * 100)
+
     my_page_data_analyse_intensity_pie_graph_ax.cla()
     my_page_data_analyse_intensity_pie_graph_ax.set_title("The Pie of Intensity")
     print("正在画激烈程度饼图")
@@ -210,24 +226,6 @@ def init_draw_Objects():
         none_x=100,
         none_x_str="waiting"
     )
-    """draw_analyse_attitude_tend(
-        p_y=analysis_processer.get_P()['data'],
-        p_x=analysis_processer.get_P()['date'],
-        n_y=analysis_processer.get_N()['data'],
-        n_x=analysis_processer.get_N()['date']
-    )
-    draw_analyse_attitude_pie(
-        60, 40
-    )
-    draw_analyse_intensity_tend(
-        i_y=analysis_processer.get_P()['data'],
-        i_x=analysis_processer.get_P()['date'],
-        none_y=analysis_processer.get_N()['data'],
-        none_x=analysis_processer.get_N()['date']
-    )
-    draw_analyse_intensity_pie(
-        60, 40
-    )"""
 
 
 def obj_sort(my_dict: dict):
@@ -276,15 +274,32 @@ def ana_start_draw():
     p_sum = sum(list(P_json['data']))
     n_sum = sum(list(N_json['data']))
 
-    i_num = sum(list(I_json['data']))
-    none_num = sum(list(none_json['data']))
+    i_sum = sum(list(I_json['data']))
+    none_sum = sum(list(none_json['data']))
+
+    if p_sum + n_sum > 0:
+        p_per = p_sum / (p_sum + n_sum)
+        n_per = n_sum / (p_sum + n_sum)
+    else:
+        p_per = 0.5
+        n_per = 0.5
+
+    if i_sum + none_sum > 0:
+        i_per = i_sum / (i_sum + none_sum)
+        none_per = none_sum / (i_sum + none_sum)
+    else:
+        i_per = 0.5
+        none_per = 0.5
 
     # 画饼图
-    draw_analyse_attitude_pie(p_x=p_sum, n_x=n_sum)
-    draw_analyse_intensity_pie(i_x=i_num, none_x=none_num)
+    draw_analyse_attitude_pie(p_x=p_per, n_x=n_per)
+    draw_analyse_intensity_pie(i_x=i_per, none_x=none_per)
 
     # 画图完毕，重新启用按钮
     my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(False)
+    my_ui.my_page_data_analyse_load_commandLinkButton.setDisabled(False)
+    my_save()
+    set_ana_process_bar(100)
     return
 
 
@@ -302,16 +317,17 @@ def start_analyse():
 
     base_path = set_page_corpus_connect.available_path
     if (
-        os.path.isfile(os.path.join(base_path, "P.json")) and
-        os.path.isfile(os.path.join(base_path, "N.json")) and
-        os.path.isfile(os.path.join(base_path, "I.json")) and
-        os.path.isfile(os.path.join(base_path, "none.json"))
+            os.path.isfile(os.path.join(base_path, "P.json")) and
+            os.path.isfile(os.path.join(base_path, "N.json")) and
+            os.path.isfile(os.path.join(base_path, "I.json")) and
+            os.path.isfile(os.path.join(base_path, "none.json"))
     ) is True:
         user_l = QMessageBox.question(
             my_ui.my_page_data_analyse,
             "检测到现有的缓存...",
             "检测到了一个现有的缓存，是否从缓存中加载？\n选择 \"是\" 确认加载，选择 \"否\" 重新进行计算分析。\n如果选择\"取消\", 则不会做任何更改。",
-            QMessageBox.Yes|QMessageBox.No|QMessageBox.Cancel
+            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
+            QMessageBox.Cancel
         )
         if user_l == QMessageBox.Yes:
             print("跳过计算，直接分析")
@@ -323,4 +339,41 @@ def start_analyse():
     analysis_processer.analise_message.set_path(base_path)
     # 启动
     my_ui.my_page_data_analyse_commandLinkButton_start.setDisabled(True)
+    my_ui.my_page_data_analyse_load_commandLinkButton.setDisabled(True)
     analysis_processer.analise_message.start()
+
+
+def load():
+    base_path = set_page_corpus_connect.available_path
+    if (
+            os.path.isfile(os.path.join(base_path, "P.json")) and
+            os.path.isfile(os.path.join(base_path, "N.json")) and
+            os.path.isfile(os.path.join(base_path, "I.json")) and
+            os.path.isfile(os.path.join(base_path, "none.json"))
+    ) is True:
+        ana_start_draw()
+        print("通过, 跳过计算")
+    else:
+        QMessageBox.warning(my_ui.my_page_data_analyse, "无缓存...", "注意，你没有一个可用的缓存可供加载！", QMessageBox.Close)
+        return
+
+
+def write_threshold():
+    base_path = my_app_img_dir
+    d = my_ui.my_page_data_analyse_doubleSpinBox.value()
+    with open(os.path.join(base_path, "threshold.ini"), "w+") as f:
+        f.write("%.2f" % d)
+    print("已写入 %.2f" % d)
+
+
+def set_default():
+    my_ui.my_page_data_analyse_doubleSpinBox.setValue(1.5)
+
+
+def my_save():
+    base_path = my_app_img_dir
+    my_page_data_analyse_attitude_tend_graph_fig.savefig(os.path.join(base_path, "ana_A.png"))
+    my_page_data_analyse_attitude_pie_graph_fig.savefig(os.path.join(base_path, "ana_B.png"))
+    my_page_data_analyse_intensity_tend_graph_fig.savefig(os.path.join(base_path, "ana_C.png"))
+    my_page_data_analyse_intensity_pie_graph_fig.savefig(os.path.join(base_path, "ana_D.png"))
+    print("ana ABCD img saved")

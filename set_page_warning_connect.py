@@ -13,6 +13,8 @@ from analysis import analysis_processer
 # 修复打包的问题
 import matplotlib
 
+from main_window_run import my_app_img_dir
+
 matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
@@ -45,6 +47,7 @@ def init_graph():
 
 
 def draw_graph(P: dict, N: dict, I: dict, none: dict):
+    base_dir = my_app_img_dir
     my_page_warning_ax.cla()
     my_page_warning_ax.set_title("Normalized data analysis")
     p_x = list(range(len(P["date"])))
@@ -56,6 +59,8 @@ def draw_graph(P: dict, N: dict, I: dict, none: dict):
         tick.set_rotation(300)
     my_page_warning_ax.legend()
     my_page_warning_FC.draw()
+    my_page_warning_fig.savefig(os.path.join(base_dir, "warning.png"))
+    print("warning saved")
 
 
 def loud_from_file_to_graph():
