@@ -5,8 +5,11 @@
 """
 import os, sys
 my_app_data = os.path.join(os.getenv("appdata"), "INRMS")
+my_app_img_dir = os.path.join(my_app_data, "img")
 if os.path.isdir(my_app_data) is False:
     os.makedirs(my_app_data)
+if os.path.isdir(my_app_img_dir) is False:
+    os.makedirs(my_app_img_dir)
 
 import MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow

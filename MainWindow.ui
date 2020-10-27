@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1459</width>
+    <width>1384</width>
     <height>815</height>
    </rect>
   </property>
@@ -518,7 +518,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="my_page_corpus">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -1908,6 +1908,9 @@ p, li { white-space: pre-wrap; }
                 </item>
                 <item row="0" column="1">
                  <widget class="QDoubleSpinBox" name="doubleSpinBox">
+                  <property name="singleStep">
+                   <double>0.010000000000000</double>
+                  </property>
                   <property name="value">
                    <double>1.500000000000000</double>
                   </property>
@@ -2190,7 +2193,7 @@ p, li { white-space: pre-wrap; }
               </sizepolicy>
              </property>
              <property name="title">
-              <string>预警结论：</string>
+              <string>预警提示：</string>
              </property>
             </widget>
            </item>
@@ -2245,6 +2248,20 @@ p, li { white-space: pre-wrap; }
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="my_page_hot_rewrite_pushButton">
+                <property name="text">
+                 <string>重新写入此图片</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="my_page_hot_saveas_pushButton">
+                <property name="text">
+                 <string>另存为...</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -2305,7 +2322,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1459</width>
+     <width>1384</width>
      <height>23</height>
     </rect>
    </property>

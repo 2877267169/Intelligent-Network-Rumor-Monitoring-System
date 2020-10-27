@@ -12,7 +12,7 @@ import json
 # 修复打包的问题
 import matplotlib
 
-from main_window_run import my_app_data
+from main_window_run import my_app_data, my_app_img_dir
 
 matplotlib.use("Agg")
 # matplotlib 和qt链接的包
@@ -59,6 +59,7 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     global ax_bar
     global my_ui
     global FC_corpus  # 画图组件
+    global fig
     my_ui = ui
 
     # 按钮
@@ -85,19 +86,19 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     transform_json_to_txt.thread_transform_json_to_txt.my_send_dict_for_graph.connect(re_graph)
     # 画板初始化
 
-    f = plt.figure()
+    fig = plt.figure()
 
-    FC_corpus = FigureCanvas(f)
+    FC_corpus = FigureCanvas(fig)
 
-    ax_bar = f.add_subplot(1, 1, 1)
+    ax_bar = fig.add_subplot(1, 1, 1)
     # 大画板!!!!!!!!!!!!!!!!!!!!!!
     my_ui.my_page_corpus_gridLayout.layout().addWidget(FC_corpus)
     # 测试时使用，故删除
     # my_ui.my_page_data_groupBox_for_graph.layout().addWidget(FigureCanvas(f))
 
-    if os.path.isfile(os.path.join(my_app_data,"corpus.json")) is True:
+    if os.path.isfile(os.path.join(my_app_data, "corpus.json")) is True:
         print("加载保存的路径...")
-        with open(os.path.join(my_app_data,"corpus.json"), 'r+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data, "corpus.json"), 'r+', encoding='utf-8') as f:
             paras = json.load(f)
         set_all_path(para=paras)
 
@@ -134,7 +135,7 @@ def verify_files():
     work_path = my_ui.my_page_corpus_lineEdit_workPath.text()
     dictionary = my_ui.my_page_corpus_lineEdit_directory.text()
 
-    if os.path.isfile(json_file_path)\
+    if os.path.isfile(json_file_path) \
             and os.path.isdir(work_path) \
             and (os.path.isdir(dictionary) and os.path.isfile(os.path.join(dictionary, "sentiment.ini"))):
         # 校验成功
@@ -142,7 +143,7 @@ def verify_files():
         # 保存数据
         paras = get_all_path()
         available_path = paras[path_para.work_path]
-        with open(os.path.join(my_app_data,"corpus.json"), 'w+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data, "corpus.json"), 'w+', encoding='utf-8') as f:
             json.dump(paras, f, ensure_ascii=False, indent=4)
 
         is_run_available = True
@@ -247,6 +248,13 @@ def create_TSV_file():
     bert_train_complex.thread_train_comp.set_args(base_dir=base_dir, is_train=is_train)
 
     bert_train_complex.thread_train_comp.start()
+
+
+def save_png():
+    global fig
+    # my_app_img_dir
+    fig.savefig(os.path.join(my_app_img_dir, "corpus.png"))
+    print("saved gph")
 
 
 def re_draw():

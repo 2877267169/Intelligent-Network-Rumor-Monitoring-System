@@ -14,7 +14,7 @@ import json
 # 修复打包的问题
 import matplotlib
 
-from main_window_run import my_app_data
+from main_window_run import my_app_data, my_app_img_dir
 
 matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -62,6 +62,7 @@ def set_page_train_connect(ui: MainWindow.Ui_MainWindow):
     global pie_ax
     global my_ui
     global FC_train
+    global train_f
     my_ui = ui
 
     # 按钮
@@ -100,9 +101,9 @@ def set_page_train_connect(ui: MainWindow.Ui_MainWindow):
     # draw_pie()
 
     # 读取上一次的配置
-    if os.path.isfile(os.path.join(my_app_data,'file_para.json')) is True:
+    if os.path.isfile(os.path.join(my_app_data, 'file_para.json')) is True:
         print('检测到配置文件, 现在加载')
-        with open(os.path.join(my_app_data,'file_para.json'), 'r+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data, 'file_para.json'), 'r+', encoding='utf-8') as f:
             json_file_para = json.load(f)
             my_ui.my_page_train_lineEdit_data_dir.setText(json_file_para[file_parameters.data_dir])
             my_ui.my_page_train_lineEdit_bert_config_file.setText(json_file_para[file_parameters.bert_config_file])
@@ -263,7 +264,7 @@ def verify():
     else:
         QMessageBox.information(my_ui.my_page_train, "校验完成", "校验已成功完成，没有发现问题", QMessageBox.Ok)
         file_para = json.dumps(file_parameters, indent=4, ensure_ascii=False)
-        with open(os.path.join(my_app_data,'file_para.json'), 'w+', encoding='utf-8') as f:
+        with open(os.path.join(my_app_data, 'file_para.json'), 'w+', encoding='utf-8') as f:
             f.write(file_para)
             print("保存了自定义配置")
 
@@ -409,3 +410,11 @@ def re_draw():
     global my_ui
     global FC_train  # 画图组件
     FC_train.draw()
+    save_png()
+
+
+def save_png():
+    global train_f
+    # my_app_img_dir
+    train_f.savefig(os.path.join(my_app_img_dir, "train_res.png"))
+    print("saved train gph")

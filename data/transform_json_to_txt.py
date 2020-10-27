@@ -209,6 +209,7 @@ class Thread_transform_json_to_txt(QThread):
             running_state.running_message = "生成工作空间"
             main_run(json_file_path=self.json_file_path, out_put_dir=self.out_put_dir, moudle_name=self.moudle_name)
             running_state.is_running = False
+            set_page_corpus_connect.save_png()
         else:
             print("程序正在进行%s, 结束前不要进行其他操作！" % running_state.running_message)
             self.my_send_message("程序正在进行%s, 结束前不要进行其他操作！" % running_state.running_message)
