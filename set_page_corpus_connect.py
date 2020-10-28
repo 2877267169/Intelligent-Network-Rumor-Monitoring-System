@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QFileDialog
 import os, sys
 
 import MainWindow
-from data import transform_json_to_txt
+from data import transform_json_to_txt, data_ops
 from data import bert_train_complex
 import running_state
 import json
@@ -39,10 +39,17 @@ path_para = PathPara()
 # 获得全部参数
 def get_all_path():
     global my_ui
+    my_data = data_ops.Data_ops(my_ui.my_page_corpus_lineEdit_workPath.text())
+    if my_data.test() is True:
+        my_sum = str(len(my_data.get_all_path()))
+    else:
+        my_sum = "NaN"
     res = {
         path_para.json_file: my_ui.my_page_corpus_lineEdit_from_json.text(),
         path_para.work_path: my_ui.my_page_corpus_lineEdit_workPath.text(),
-        path_para.dict: my_ui.my_page_corpus_lineEdit_directory.text()
+        path_para.dict: my_ui.my_page_corpus_lineEdit_directory.text(),
+        "dataset_name": str(my_ui.my_page_corpus_lineEdit_from_json.text()).split('\\')[-1].split('/')[-1].replace(".json", ''),
+        "sum": my_sum
     }
     return res
 
