@@ -73,6 +73,7 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     ui.my_page_corpus_button_fromJson.clicked.connect(get_user_input_and_set_to_json_lineEdit)
     ui.my_page_corpus_button_workDir.clicked.connect(get_user_input_and_set_to_workDir)
     ui.my_page_corpus_button_directionary.clicked.connect(get_user_input_and_set_to_directory_lineEdit)
+    ui.my_page_corpus_button_rewrite_graph.clicked.connect(save_png)
 
     # 命令按钮
     ui.my_page_corpus_commandLinkButton_verify.clicked.connect(verify_files)
@@ -233,6 +234,7 @@ def re_graph(d: dict):
         value.append(line[1])
     ax_bar.bar(key_value, value)
     FC_corpus.draw()
+    save_png()
 
 
 def create_TSV_file():
@@ -261,7 +263,7 @@ def save_png():
     global fig
     # my_app_img_dir
     fig.savefig(os.path.join(my_app_img_dir, "corpus.png"))
-    print("saved gph")
+    print("saved corpus")
 
 
 def re_draw():
@@ -273,3 +275,5 @@ def re_draw():
     global my_ui
     global FC_corpus  # 画图组件
     FC_corpus.draw()
+    save_png()
+

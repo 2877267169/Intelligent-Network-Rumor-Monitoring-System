@@ -518,7 +518,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="my_page_corpus">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -783,6 +783,13 @@
                 </property>
                 <property name="text">
                  <string>未选择数据集</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="my_page_corpus_button_rewrite_graph">
+                <property name="text">
+                 <string>重新写入此图片</string>
                 </property>
                </widget>
               </item>
