@@ -3,7 +3,9 @@ from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import os, sys
 
 import MainWindow
+import set_page_corpus_connect
 from analysis.analysis_processer import get_4_percentage
+from analysis.read_from_bert import get_bert_res_to_json
 from data import transform_json_to_txt
 from data import bert_train_complex
 import running_state
@@ -14,6 +16,7 @@ from analysis import analysis_processer
 import matplotlib
 
 from main_window_run import my_app_img_dir
+from set_page_train_connect import get_all_file_parameters, file_parameters
 
 matplotlib.use("Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -43,10 +46,12 @@ def set_warning_connect(ui: MainWindow.Ui_MainWindow):
 
 def init_graph():
     zero_obj = {"date": [0], "data": [0]}
-    draw_graph(zero_obj, zero_obj, zero_obj, zero_obj)
+    draw_graph(zero_obj, zero_obj, zero_obj, zero_obj, zero_obj)
 
 
-def draw_graph(P: dict, N: dict, I: dict, none: dict):
+def draw_graph(P: dict, N: dict, I: dict, none: dict, bert_res=None):
+    if bert_res is None:
+        bert_res = {"date": [0], "data": [0]}
     base_dir = my_app_img_dir
     my_page_warning_ax.cla()
     my_page_warning_ax.set_title("Normalized data analysis")
@@ -55,6 +60,8 @@ def draw_graph(P: dict, N: dict, I: dict, none: dict):
     my_page_warning_ax.plot(p_x, N["data"], linestyle='none', marker='P', color="blue", label="Negative Value")
     my_page_warning_ax.plot(p_x, I["data"], linestyle='none', marker='x', color="red", label="Intensity Value")
     my_page_warning_ax.plot(p_x, none["data"], linestyle='none', marker='x', color="green", label="Tiny Attitude Value")
+    my_page_warning_ax.plot(list(range(len(bert_res["date"]))), bert_res["data"], linestyle='none', marker='.',
+                            color="green", label="BERT Model res")
     for tick in my_page_warning_ax.get_xticklabels():
         tick.set_rotation(300)
     my_page_warning_ax.legend()
@@ -72,5 +79,25 @@ def start_to_warning():
     # 进行百分比趋势分析
 
     # 画图
+    paras = get_all_file_parameters()
+    work_path = set_page_corpus_connect.available_path
+    res_path = os.path.join(paras[file_parameters.output_dir], "test_results.tsv")
+
+    if os.path.isfile(res_path) is False:
+        print("找不到训练结果文件！%s" % res_path)
+        return
+    if os.path.isdir(work_path) is False:
+        print("工作路径有问题，请检查是否已完成语料设置%s" % work_path)
+        return
     l: list = loud_from_file_to_graph()
-    draw_graph(l[0], l[1], l[2], l[3])
+    get_bert_res_to_json(work_path=set_page_corpus_connect.available_path,
+                         bert_train_res_file_path=os.path.join(paras[file_parameters.output_dir], "test_results.tsv"))
+    if os.path.isfile(os.path.join(work_path, "toal.json")) is True:
+        print("成功检测到结果文件 %s ,现在画图" % os.path.join(work_path, "toal.json"))
+        with open(os.path.join(work_path, "toal.json"), 'r', encoding='utf-8') as f:
+            my_obj = json.load(f)
+        draw_graph(l[0], l[1], l[2], l[3], {"date": my_obj[0], "data": my_obj[1]})
+        return
+    else:
+        print("执行完毕，但%s生成存在问题。"%os.path.join(work_path, "toal.json"))
+        return

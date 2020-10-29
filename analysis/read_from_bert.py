@@ -64,7 +64,13 @@ def read(work_path: str):
     f.close()
 
 
-def get_bert(work_path: str):
+def get_bert_res_to_json(work_path: str, bert_train_res_file_path: str):
+    """
+
+    :param bert_train_res_file_path:BERT 训练文件结果
+    :param work_path:工作目录：用于获取路径（路径用于获取日期）
+    :return:None
+    """
     # 将日期列表、是谣言概率的列表和不是谣言概率的列表 存放到这个总的列表中
     total = []
     my_data = data_ops.Data_ops(work_path)
@@ -78,20 +84,18 @@ def get_bert(work_path: str):
     if len(path) == 0:
         return 0
 
-        # 读取weibo，获取日期
-    for i in range(335):
-        d = open(path[i], "r", encoding="utf-8")
+    # 处理TSV文件
+    with open(bert_train_res_file_path, "r", encoding="utf-8") as f:
+        probability = f.readlines()
+        for i in probability:
+            d = i.split("\t")
 
-        date.append(d.read().split("\t")[0])
-    d.close()
-    f = open(r"E:\py\test_results.tsv", "r", encoding="utf-8")
-
-    probability = f.readlines()
-    for i in probability:
-        d = i.split("\t")
-
-        is_Rumor_probability.append(float(d[0]))
-        not_is_Rumor_probability.append(float(d[1][:-1]))
+            is_Rumor_probability.append(float(d[0]))
+            not_is_Rumor_probability.append(float(d[1][:-1]))
+    # 读取weibo，获取日期
+    for i in range(len(probability)):
+        with open(path[i], "r", encoding="utf-8") as d:
+            date.append(d.read().split("\t")[0])
 
     total.append(date)
     total.append(is_Rumor_probability)
@@ -103,7 +107,6 @@ def get_bert(work_path: str):
     with open(os.path.join(work_path, "toal.json"), 'w+', encoding='utf-8') as f:
         json.dump(total, f, indent=4)
 
-
-if __name__ == '__main__':
-    # read(r"E:\py\test_dataset")
-    get_bert(r"E:\py\test_dataset")
+# if __name__ == '__main__':
+#     # read(r"E:\py\test_dataset")
+#     get_bert(r"E:\py\test_dataset")
