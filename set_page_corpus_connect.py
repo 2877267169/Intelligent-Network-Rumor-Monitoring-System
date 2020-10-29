@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QFileDialog
 import os, sys
 
 import MainWindow
-from data import transform_json_to_txt
+from data import transform_json_to_txt, data_ops
 from data import bert_train_complex
 import running_state
 import json
@@ -39,10 +39,17 @@ path_para = PathPara()
 # 获得全部参数
 def get_all_path():
     global my_ui
+    my_data = data_ops.Data_ops(my_ui.my_page_corpus_lineEdit_workPath.text())
+    if my_data.test() is True:
+        my_sum = str(len(my_data.get_all_path()))
+    else:
+        my_sum = "NaN"
     res = {
         path_para.json_file: my_ui.my_page_corpus_lineEdit_from_json.text(),
         path_para.work_path: my_ui.my_page_corpus_lineEdit_workPath.text(),
-        path_para.dict: my_ui.my_page_corpus_lineEdit_directory.text()
+        path_para.dict: my_ui.my_page_corpus_lineEdit_directory.text(),
+        "dataset_name": str(my_ui.my_page_corpus_lineEdit_from_json.text()).split('\\')[-1].split('/')[-1].replace(".json", ''),
+        "sum": my_sum
     }
     return res
 
@@ -66,6 +73,7 @@ def set_page_corpus_connect(ui: MainWindow.Ui_MainWindow):
     ui.my_page_corpus_button_fromJson.clicked.connect(get_user_input_and_set_to_json_lineEdit)
     ui.my_page_corpus_button_workDir.clicked.connect(get_user_input_and_set_to_workDir)
     ui.my_page_corpus_button_directionary.clicked.connect(get_user_input_and_set_to_directory_lineEdit)
+    ui.my_page_corpus_button_rewrite_graph.clicked.connect(save_png)
 
     # 命令按钮
     ui.my_page_corpus_commandLinkButton_verify.clicked.connect(verify_files)
@@ -226,6 +234,7 @@ def re_graph(d: dict):
         value.append(line[1])
     ax_bar.bar(key_value, value)
     FC_corpus.draw()
+    save_png()
 
 
 def create_TSV_file():
@@ -254,7 +263,7 @@ def save_png():
     global fig
     # my_app_img_dir
     fig.savefig(os.path.join(my_app_img_dir, "corpus.png"))
-    print("saved gph")
+    print("saved corpus")
 
 
 def re_draw():
@@ -266,3 +275,5 @@ def re_draw():
     global my_ui
     global FC_corpus  # 画图组件
     FC_corpus.draw()
+    save_png()
+

@@ -415,6 +415,9 @@ class Ui_MainWindow(object):
         self.my_page_corpus_button_for_state.setStyleSheet("")
         self.my_page_corpus_button_for_state.setObjectName("my_page_corpus_button_for_state")
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.my_page_corpus_button_for_state)
+        self.my_page_corpus_button_rewrite_graph = QtWidgets.QPushButton(self.groupBox_8)
+        self.my_page_corpus_button_rewrite_graph.setObjectName("my_page_corpus_button_rewrite_graph")
+        self.formLayout_2.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.my_page_corpus_button_rewrite_graph)
         self.horizontalLayout_2.addWidget(self.groupBox_8)
         self.gridLayout_2.addWidget(self.groupBox_2, 1, 0, 1, 1)
         self.stackedWidget.addWidget(self.my_page_corpus)
@@ -1159,7 +1162,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuversion.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -1184,6 +1187,7 @@ class Ui_MainWindow(object):
         self.groupBox_8.setTitle(_translate("MainWindow", "工作进度"))
         self.label_7.setText(_translate("MainWindow", "总进度"))
         self.my_page_corpus_button_for_state.setText(_translate("MainWindow", "未选择数据集"))
+        self.my_page_corpus_button_rewrite_graph.setText(_translate("MainWindow", "重新写入此图片"))
         self.groupBox_4.setTitle(_translate("MainWindow", "模型训练设置"))
         self.groupBox_9.setTitle(_translate("MainWindow", "File Parameters"))
         self.my_page_train_button_data_dir.setText(_translate("MainWindow", "data_dir"))
