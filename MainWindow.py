@@ -1290,7 +1290,7 @@ class Ui_MainWindow(object):
         self.debug_mode_label.setText(_translate("MainWindow", "Debug Mode"))
         self.menuversion.setTitle(_translate("MainWindow", "version"))
         self.menuCopyright_C_HZU_Nobug_Workgroup.setTitle(_translate("MainWindow", "Copyright (C) HZU Nobug Workgroup"))
-        self.action0_1_201025.setText(_translate("MainWindow", "1.0.0.20201030 update 20201030"))
+        self.action0_1_201025.setText(_translate("MainWindow", "1.0.0.20201030 update 20201031"))
         self.actionF_S_X_HZU.setText(_translate("MainWindow", "F. SX. HZU"))
         self.actionL_JG_HZU.setText(_translate("MainWindow", "L. JG. HZU"))
 import page_icon_rc_rc

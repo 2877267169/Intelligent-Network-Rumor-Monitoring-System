@@ -2395,7 +2395,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action0_1_201025">
    <property name="text">
-    <string>1.0.0.20201030 update 20201030</string>
+    <string>1.0.0.20201030 update 20201031</string>
    </property>
   </action>
   <action name="actionF_S_X_HZU">
