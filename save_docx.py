@@ -56,7 +56,13 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
         return
     if os.path.isfile(os.path.join(paras["work_path"], "toal.json")) is False:
         QMessageBox.critical(
-            ui.statusbar, "toal.json Not Found", "%s\n你貌似没有设置进行预警分析。" % os.path.join(my_app_dir, "toal.json")
+            ui.statusbar, "toal.json Not Found", "%s\n你貌似没有进行预警分析。" % os.path.join(my_app_dir, "toal.json")
+        )
+        print("你貌似没有设置进行预警分析")
+        return
+    if os.path.isfile(os.path.join(paras["work_path"], "warning.json")) is False:
+        QMessageBox.critical(
+            ui.statusbar, "toal.json Not Found", "%s\n你貌似没有进行预警分析。" % os.path.join(my_app_dir, "warning.json")
         )
         print("你貌似没有设置进行预警分析")
         return
