@@ -10,12 +10,14 @@ from data import transform_json_to_txt
 from data import bert_train_complex
 import running_state
 import json
+from warning import wcalc
 from analysis import analysis_processer
 # matplotlib 和qt链接的包
 # 修复打包的问题
 import matplotlib
 
 from main_window_run import my_app_img_dir
+from set_page_data_analyse_connect import obj_sort
 from set_page_train_connect import get_all_file_parameters, file_parameters
 
 matplotlib.use("Agg")
@@ -59,8 +61,9 @@ def draw_graph(P: dict, N: dict, I: dict, none: dict, bert_res=None):
     my_page_warning_ax.plot(p_x, P["data"], linestyle='none', marker='P', color="orange", label="Positive Value")
     my_page_warning_ax.plot(p_x, N["data"], linestyle='none', marker='P', color="blue", label="Negative Value")
     my_page_warning_ax.plot(p_x, I["data"], linestyle='none', marker='x', color="red", label="Intensity Value")
-    my_page_warning_ax.plot(p_x, none["data"], linestyle='none', marker='x', color="green", label="Tiny Attitude Value")
-    my_page_warning_ax.plot(list(range(len(bert_res["date"]))), bert_res["data"], linestyle='none', marker='.',
+    my_page_warning_ax.plot(p_x, none["data"], linestyle='none', marker='x', color="lightseagreen",
+                            label="Tiny Attitude Value")
+    my_page_warning_ax.plot(bert_res["date"], bert_res["data"], linestyle='none', marker='.',
                             color="green", label="BERT Model res")
     for tick in my_page_warning_ax.get_xticklabels():
         tick.set_rotation(300)
@@ -75,19 +78,35 @@ def loud_from_file_to_graph():
 
 
 def start_to_warning():
-    print("分析命令开始")
-    # 进行百分比趋势分析
+    global my_ui
 
-    # 画图
+    print("分析命令开始")
     paras = get_all_file_parameters()
     work_path = set_page_corpus_connect.available_path
     res_path = os.path.join(paras[file_parameters.output_dir], "test_results.tsv")
+    # 画图
+    my_ui.my_page_warning_progressBar.setValue(20)
+
 
     if os.path.isfile(res_path) is False:
         print("找不到训练结果文件！%s" % res_path)
+        QMessageBox.critical(
+            my_ui.stackedWidget,
+            '错误',
+            "\"%s\"\n找不到训练结果文件！" % res_path,
+            QMessageBox.Close
+        )
+        my_ui.my_page_warning_progressBar.setValue(0)
         return
     if os.path.isdir(work_path) is False:
         print("工作路径有问题，请检查是否已完成语料设置%s" % work_path)
+        QMessageBox.critical(
+            my_ui.stackedWidget,
+            '错误',
+            "\"%s\"\n工作路径有问题，请检查是否已完成语料设置" % work_path,
+            QMessageBox.Close
+        )
+        my_ui.my_page_warning_progressBar.setValue(0)
         return
     l: list = loud_from_file_to_graph()
     get_bert_res_to_json(work_path=set_page_corpus_connect.available_path,
@@ -96,8 +115,43 @@ def start_to_warning():
         print("成功检测到结果文件 %s ,现在画图" % os.path.join(work_path, "toal.json"))
         with open(os.path.join(work_path, "toal.json"), 'r', encoding='utf-8') as f:
             my_obj = json.load(f)
-        draw_graph(l[0], l[1], l[2], l[3], {"date": my_obj[0], "data": my_obj[1]})
-        return
+        my_out_obj = obj_sort({"date": my_obj[0], "data": my_obj[1]})
+        tmp = ""
+        count = 0
+        for i in range(len(my_out_obj["date"])):
+            if my_out_obj["date"][i] != tmp:
+                tmp = my_out_obj["date"][i]
+                my_out_obj["date"][i] = count
+                count += 1
+            else:
+                my_out_obj["date"][i] = count
+        a = list(set(my_out_obj["date"]))
+        draw_graph(l[0], l[1], l[2], l[3], my_out_obj)
+        # return 此处不返回
     else:
-        print("执行完毕，但%s生成存在问题。"%os.path.join(work_path, "toal.json"))
+        QMessageBox.critical(
+            my_ui.stackedWidget,
+            '错误',
+            "执行完毕，但%s生成存在问题。" % os.path.join(work_path, "toal.json"),
+            QMessageBox.Close
+        )
+        print("执行完毕，但%s生成存在问题。" % os.path.join(work_path, "toal.json"))
+        my_ui.my_page_warning_progressBar.setValue(0)
         return
+    # 进行百分比趋势分析
+    my_ui.my_page_warning_progressBar.setValue(50)
+    wcalc.warning_start(n=l[1]["data"], i=l[2]["data"], work_path=work_path)
+    if os.path.isfile(os.path.join(work_path, "warning.json")) is False:
+        QMessageBox.critical(
+            my_ui.stackedWidget,
+            '错误',
+            "执行完毕，但%s的生成存在问题。" % os.path.join(work_path, "warning.json"),
+            QMessageBox.Close
+        )
+        my_ui.my_page_warning_progressBar.setValue(0)
+        return
+    my_w_out = wcalc.get_obj(work_path=work_path)
+    my_ui.my_page_warning_see_textEdit.setText(str(my_w_out))
+    my_ui.my_page_warninig_message_text_edit.setText(str("危"))
+    my_ui.my_page_warning_progressBar.setValue(100)
+    return

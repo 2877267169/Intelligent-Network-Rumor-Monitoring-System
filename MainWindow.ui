@@ -518,7 +518,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="my_page_corpus">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -2203,6 +2203,15 @@ p, li { white-space: pre-wrap; }
              <property name="title">
               <string>数据所见：</string>
              </property>
+             <layout class="QGridLayout" name="gridLayout_19">
+              <item row="0" column="0">
+               <widget class="QTextEdit" name="my_page_warning_see_textEdit">
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item row="2" column="2">
@@ -2216,6 +2225,18 @@ p, li { white-space: pre-wrap; }
              <property name="title">
               <string>预警提示：</string>
              </property>
+             <layout class="QGridLayout" name="gridLayout_20">
+              <item row="0" column="0">
+               <widget class="QTextEdit" name="my_page_warninig_message_text_edit">
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item row="0" column="0" colspan="3">
