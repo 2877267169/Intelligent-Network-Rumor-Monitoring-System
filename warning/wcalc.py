@@ -67,7 +67,7 @@ def warning_start(n: list, i: list, work_path: str):
     n_var_desc = put_level(num=n_var)
     n_a_e_desc = put_level(
         num=n_a_e,
-        num_list_for_level=[-2, -0.5, -0.25,0.25, 0.5, 2],
+        num_list_for_level=[-2, -0.5, -0.25, 0.25, 0.5, 2],
         str_list_for_description=[
             "剧烈减少",
             "减少",
@@ -80,7 +80,7 @@ def warning_start(n: list, i: list, work_path: str):
     i_var_desc = put_level(num=i_var)
     i_a_e_desc = put_level(
         num=i_a_e,
-        num_list_for_level=[-2, -0.5, -0.25,0.25, 0.5, 2],
+        num_list_for_level=[-2, -0.5, -0.25, 0.25, 0.5, 2],
         str_list_for_description=[
             "剧烈减少",
             "减少",
@@ -107,3 +107,22 @@ def get_obj(work_path: str):
         my_obj = json.load(f)
 
     return my_obj
+
+
+def go_for_str(my_obj: list):
+    """
+    将格式化后的数组转为字符串描述
+    :param my_obj:
+    :return:
+    """
+    # 㲰
+
+    s_obj = [
+        "数据集情感负向趋势的期望为 %f，\n\t处于 【%s】 的状态。\n" % (my_obj[0][0], my_obj[0][1]),
+        "数据集负向分析样本方差为 %f，\n\t处于 【%s】 的状态。\n" % (my_obj[1][0], my_obj[1][1]),
+        "微博激烈程度分析趋势的期望为 %f，\n\t处于 【%s】 的状态\n" % (my_obj[2][0], my_obj[2][1]),
+        "微博激烈程度分析趋势的期望为 %f，\n\t处于 【%s】 的状态\n\n" % (my_obj[3][0], my_obj[3][1]),
+        "总体的预警指标值为%d, 样本所示情况 【%s】" % (my_obj[4][0], my_obj[4][1])
+    ]
+
+    return s_obj

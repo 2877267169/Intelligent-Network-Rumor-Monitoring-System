@@ -6,7 +6,8 @@ import docx
 from docx.shared import Cm
 import MainWindow
 from main_window_run import my_app_img_dir, my_app_data
-from set_page_corpus_connect import get_all_path
+import set_page_corpus_connect
+from warning import wcalc
 
 
 def get_threshold():
@@ -38,10 +39,10 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
     """
     base_dir = my_app_img_dir
     my_app_dir = my_app_data
-    paras: dict = get_all_path()
+    paras: dict = set_page_corpus_connect.get_all_path()
     threshold: float = get_threshold()
     localtime = time.asctime(time.localtime(time.time()))
-    if os.path.isfile(os.path.join(my_app_dir, "corpus.json"))is False:
+    if os.path.isfile(os.path.join(my_app_dir, "corpus.json")) is False:
         QMessageBox.critical(
             ui.statusbar, "corpus.json Not Found", "发生了一些错误\n你貌似没有完成语料设置。"
         )
@@ -53,6 +54,12 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
         )
         print("你貌似没有设置数据分析阈值")
         return
+    if os.path.isfile(os.path.join(paras["work_path"], "toal.json")) is False:
+        QMessageBox.critical(
+            ui.statusbar, "toal.json Not Found", "%s\n你貌似没有设置进行预警分析。" % os.path.join(my_app_dir, "toal.json")
+        )
+        print("你貌似没有设置进行预警分析")
+        return
     if (
             os.path.isfile(os.path.join(base_dir, "corpus.png")) and
             os.path.isfile(os.path.join(base_dir, "train_res.png")) and
@@ -63,6 +70,7 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
             os.path.isfile(os.path.join(base_dir, "warning.png")) and
             os.path.isfile(os.path.join(base_dir, "word_cloud.png"))
     ) is True:
+
         filename_choose, _ = QFileDialog.getSaveFileName(
             ui.statusbar,
             "Export Docx Report...",
@@ -108,11 +116,15 @@ def save_docx(ui: MainWindow.Ui_MainWindow):
                 p.runs[0].add_break()  # 添加一个折行
                 p.runs[0].add_picture(os.path.join(base_dir, "word_cloud.png"), width=Cm(14.64))
                 p.runs[0].add_break()  # 添加一个折行
+        my_w_out: list = wcalc.get_obj(work_path=paras["work_path"])
+        res_obj = wcalc.go_for_str(my_w_out)
 
         replace_str("我是日期", localtime, doc.paragraphs)
 
         replace_str("我是数据总量", paras["sum"], doc.paragraphs)
         replace_str("我是阈值", str(threshold), doc.paragraphs)
+        replace_str("我是数据所见", "%s%s%s%s" % (res_obj[0], res_obj[1], res_obj[2], res_obj[3]), doc.paragraphs)
+        replace_str("我是预警提示", "%s" % (res_obj[4]), doc.paragraphs)
 
         replace_str("我是数据集名", paras["dataset_name"], doc.paragraphs)
 

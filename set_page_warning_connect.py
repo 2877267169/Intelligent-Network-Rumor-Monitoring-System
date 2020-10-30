@@ -87,7 +87,6 @@ def start_to_warning():
     # 画图
     my_ui.my_page_warning_progressBar.setValue(20)
 
-
     if os.path.isfile(res_path) is False:
         print("找不到训练结果文件！%s" % res_path)
         QMessageBox.critical(
@@ -150,8 +149,9 @@ def start_to_warning():
         )
         my_ui.my_page_warning_progressBar.setValue(0)
         return
-    my_w_out = wcalc.get_obj(work_path=work_path)
-    my_ui.my_page_warning_see_textEdit.setText(str(my_w_out))
-    my_ui.my_page_warninig_message_text_edit.setText(str("危"))
+    my_w_out: list = wcalc.get_obj(work_path=work_path)
+    res_obj = wcalc.go_for_str(my_w_out)
+    my_ui.my_page_warning_see_textEdit.setText("%s%s%s%s" % (res_obj[0], res_obj[1], res_obj[2], res_obj[3]))
+    my_ui.my_page_warninig_message_text_edit.setText("%s" % res_obj[4])
     my_ui.my_page_warning_progressBar.setValue(100)
     return
