@@ -2379,14 +2379,33 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>version</string>
     </property>
+    <widget class="QMenu" name="menuCopyright_C_HZU_Nobug_Workgroup">
+     <property name="title">
+      <string>Copyright (C) HZU Nobug Workgroup</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionF_S_X_HZU"/>
+     <addaction name="actionL_JG_HZU"/>
+    </widget>
     <addaction name="action0_1_201025"/>
+    <addaction name="menuCopyright_C_HZU_Nobug_Workgroup"/>
    </widget>
    <addaction name="menuversion"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action0_1_201025">
    <property name="text">
-    <string>0.1.20201006.3</string>
+    <string>1.0.0.20201030 update 20201030</string>
+   </property>
+  </action>
+  <action name="actionF_S_X_HZU">
+   <property name="text">
+    <string>F. SX. HZU</string>
+   </property>
+  </action>
+  <action name="actionL_JG_HZU">
+   <property name="text">
+    <string>L. JG. HZU</string>
    </property>
   </action>
  </widget>
